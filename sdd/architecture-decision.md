@@ -2,68 +2,84 @@
 
 ## Status
 
-Proposed
+Accepted
 
 ## Context
 
-Project: `<project-name>`
-Claim: `<measurable claim>`
-Benchmark: `<primary metric>`
+Project: event-sourcing-orders
+Claim: event sourcing e CQRS
+Benchmark: events_per_second
 
 Problem forces:
 
-- Domain complexity: `<low|medium|high>`
-- Integration pressure: `<low|medium|high>`
-- UI state complexity: `<low|medium|high|none>`
-- Data/ML reproducibility: `<low|medium|high>`
-- Auditability/event history: `<low|medium|high>`
-- Throughput/async pressure: `<low|medium|high>`
-- Independent deployability need: `<low|medium|high>`
+- Domain complexity: low
+- Integration pressure: low
+- UI state complexity: none
+- Data/ML reproducibility: low
+- Auditability/event history: high
+- Throughput/async pressure: low
+- Independent deployability need: low
 
 ## Decision
 
-Chosen architecture: `<style>`
+Chosen architecture: CQRS + Event Sourcing
 
 Reason:
 
-`<Explain why this architecture fits the actual problem and benchmark.>`
+Commands produce events appended to an immutable event store. A separate
+read-model projection replays events to rebuild current order state. This
+directly proves the claim: every state change is recorded as an event, and
+the read model is derived independently from the write model.
 
 Dependency rule:
 
-`<Example: domain/application do not depend on infra; adapters depend inward through ports.>`
+domain/application do not depend on infra; adapters depend inward through ports.
 
 ## Rejected Alternatives
 
 | Alternative | Why rejected |
 |---|---|
-| `<style>` | `<reason>` |
-| `<style>` | `<reason>` |
+| Layered (controller -> service -> repository) | Doesn't demonstrate event sourcing — state updates would be in-place mutations |
+| Event-driven with Kafka | Adds infrastructure without improving the benchmark claim for a single-JVM demo |
 
 ## Folder Layout
 
-```txt
+```
 src/
-  <folders>
+  main/java/com/portfolio/eventsourcing/
+    EventsourcingApplication.java
+    domain/       — sealed OrderEvent, Order aggregate, OrderCommand, OrderService
+    application/  — EventStore, CqrsProjection, OrderController
+    benchmark/    — BenchmarkRunner
+    infrastructure/ — EventSerializer
 test/
-benchmarks/
+  java/com/portfolio/eventsourcing/
+    domain/OrderTest.java
+    application/EventStoreTest.java
+    benchmark/BenchmarkRunnerTest.java
+benchmarks/results/
 ```
 
 ## Testing Strategy
 
-- Unit tests: `<what is isolated>`
-- Integration tests: `<what is wired>`
-- Benchmark: `<what proves the claim>`
+- Unit tests: domain aggregate rebuild, event store append/read, benchmark JSON output
+- Integration tests: (in-memory, no Spring context needed)
+- Benchmark: RunBenchmarkRunner with 10k orders, 5 events each, measure events/second
 
 ## Consequences
 
 Positive:
 
-- `<benefit>`
+- Event sourcing and CQRS patterns are directly visible in the code
+- Domain has zero framework imports
+- In-memory store keeps the demo self-contained
 
 Tradeoffs:
 
-- `<cost>`
+- No persistence across restarts (intentional — keeps benchmark simple)
+- No distributed messaging (not needed for single-JVM throughput measurement)
 
 Migration path:
 
-- `<how to evolve if the problem grows>`
+- Replace EventStore with PostgreSQL-backed or Redpanda-backed adapter
+- Add outbox pattern for production-grade event publishing
