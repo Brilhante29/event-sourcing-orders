@@ -7,7 +7,7 @@ program:
     - gradle/libs.versions.toml
     - Dockerfile multi-stage pattern
     - benchmark JSON schema
-status: implemented
+status: benchmarked
 claim: event sourcing e CQRS
 stack:
   - java21

@@ -1,0 +1,16 @@
+{
+  "project" : "event-sourcing-orders",
+  "metric" : "events_per_second",
+  "value" : 776,
+  "unit" : "events/s",
+  "numOrders" : 10000,
+  "eventsPerOrder" : 5,
+  "totalEvents" : 90000,
+  "durationSeconds" : "116.049",
+  "timestamp" : "2026-07-20T21:01:32.155444457Z",
+  "environment" : {
+    "os" : "Linux",
+    "java" : "21.0.11",
+    "container" : "Docker"
+  }
+}
