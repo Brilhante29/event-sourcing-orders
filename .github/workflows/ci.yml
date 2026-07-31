@@ -12,8 +12,8 @@ jobs:
           java-version: "21"
           distribution: "temurin"
       - uses: gradle/actions/setup-gradle@d9c87d481d55275bb5441eef3fe0e46805f9ef70 # v3.5.0
-      - run: gradle test
-      - run: gradle build -x test
+      - run: ./gradlew test
+      - run: ./gradlew build -x test
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.13.0
       - name: Build Docker image
         run: docker build -t event-sourcing-orders .
