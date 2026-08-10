@@ -65,7 +65,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    entrypoint: ["gradle"]
+    entrypoint: ["./gradlew"]
     command: ["test", "--rerun-tasks", "--no-daemon"]
 
 volumes:
