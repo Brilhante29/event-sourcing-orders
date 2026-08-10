@@ -1,12 +1,12 @@
 # Release Checklist
 
-- [x] `docker build` passes.
-- [x] `docker run` path documented.
-- [x] Benchmark command runs from clean checkout.
-- [x] Benchmark result stored under `benchmarks/results/`.
-- [x] README opens with number and result.
-- [x] `REFERENCES.md` exists.
-- [x] License exists.
-- [x] No empty directories used as proof.
-- [x] No API key required for the default path.
-- [x] Post angle written in README.
+- [x] Java 21 main and test sources compile in Docker.
+- [x] Unit and PostgreSQL integration tests pass.
+- [x] Restart, projection rebuild, and stale-version conflict are tested.
+- [x] Local payment adapter is the no-secret default.
+- [x] HTTP adapter sends the exact #11 idempotency and payload contract.
+- [x] Orders and payments do not share a database.
+- [x] Benchmark has warm-up, three repetitions, and V2 output.
+- [x] README opens with project number, claim, and numeric result.
+- [x] Messaging is explicitly `none`; no Kafka/Redpanda claim remains.
+- [ ] Clean-tree benchmark provenance and final validation recorded.

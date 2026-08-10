@@ -1,85 +1,51 @@
-# Architecture Decision
+# Architecture Decision: Hexagonal CQRS Event Sourcing
 
 ## Status
 
-Accepted
+Accepted.
 
 ## Context
 
-Project: event-sourcing-orders
-Claim: event sourcing e CQRS
-Benchmark: events_per_second
-
-Problem forces:
-
-- Domain complexity: low
-- Integration pressure: low
-- UI state complexity: none
-- Data/ML reproducibility: low
-- Auditability/event history: high
-- Throughput/async pressure: low
-- Independent deployability need: low
+The claim requires restart durability, ordered aggregate histories, conflict
+detection, replay, a separate read model, and integration with an independently
+deployed payments service. The previous in-memory implementation could not
+prove any restart or persistence behavior.
 
 ## Decision
 
-Chosen architecture: CQRS + Event Sourcing
+Use event sourcing as the write model, CQRS as the persistent read model, and
+hexagonal ports around PostgreSQL and payment authorization.
 
-Reason:
+```text
+REST -> OrderService -> OrderEventRepository -> JDBC/PostgreSQL
+                    -> PaymentAuthorizer -> local | HTTP #11
+event history -> CqrsProjection -> OrderProjectionStore -> PostgreSQL
+```
 
-Commands produce events appended to an immutable event store. A separate
-read-model projection replays events to rebuild current order state. This
-directly proves the claim: every state change is recorded as an event, and
-the read model is derived independently from the write model.
+The write and read models use separate tables. They share one orders database
+because projection rebuild is local to this bounded context. The payments
+service owns a different database and is reached only by HTTP.
 
-Dependency rule:
+## Dependency Rule
 
-domain/application do not depend on infra; adapters depend inward through ports.
+- Domain: commands, sealed events, aggregate, event-store port, use-case service.
+- Application: read model, projection use case, controller, payment/projection ports.
+- Infrastructure: JDBC, Flyway, PostgreSQL, Spring conditions, and HTTP client.
+- Dependencies point inward; adapters are replaceable at composition time.
 
 ## Rejected Alternatives
 
-| Alternative | Why rejected |
+| Alternative | Reason |
 |---|---|
-| Layered (controller -> service -> repository) | Doesn't demonstrate event sourcing — state updates would be in-place mutations |
-| Event-driven with Kafka | Adds infrastructure without improving the benchmark claim for a single-JVM demo |
-
-## Folder Layout
-
-```
-src/
-  main/java/com/portfolio/eventsourcing/
-    EventsourcingApplication.java
-    domain/       — sealed OrderEvent, Order aggregate, OrderCommand, OrderService
-    application/  — EventStore, CqrsProjection, OrderController
-    benchmark/    — BenchmarkRunner
-    infrastructure/ — EventSerializer
-test/
-  java/com/portfolio/eventsourcing/
-    domain/OrderTest.java
-    application/EventStoreTest.java
-    benchmark/BenchmarkRunnerTest.java
-benchmarks/results/
-```
-
-## Testing Strategy
-
-- Unit tests: domain aggregate rebuild, event store append/read, benchmark JSON output
-- Integration tests: (in-memory, no Spring context needed)
-- Benchmark: RunBenchmarkRunner with 10k orders, 5 events each, measure events/second
+| In-memory event list | Loses history on restart and makes replay durability untestable. |
+| CRUD order table as source of truth | Erases the immutable transition history central to the claim. |
+| Kafka/Redpanda event log | Adds a broker without a publication or consumer claim; #20 owns delivery. |
+| Shared payments/orders database | Couples bounded contexts and invalidates independent deployment. |
+| JPA/Hibernate | Hides append SQL and optimistic sequence enforcement that this repo must prove. |
 
 ## Consequences
 
-Positive:
-
-- Event sourcing and CQRS patterns are directly visible in the code
-- Domain has zero framework imports
-- In-memory store keeps the demo self-contained
-
-Tradeoffs:
-
-- No persistence across restarts (intentional — keeps benchmark simple)
-- No distributed messaging (not needed for single-JVM throughput measurement)
-
-Migration path:
-
-- Replace EventStore with PostgreSQL-backed or Redpanda-backed adapter
-- Add outbox pattern for production-grade event publishing
+- PostgreSQL is required because durability is intentional, not incidental.
+- A payment can succeed before the authorization event append. The stable
+  idempotency key supports a retry, but no cross-service atomicity is claimed.
+- Projection rebuild is full-table and single-process; incremental consumers are future work only if benchmark evidence requires them.

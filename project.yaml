@@ -1,24 +1,28 @@
+manifest_version: 2
 id: 14
 name: event-sourcing-orders
 program:
   id: backend-reliability-platform
-  narrative_fit: Demonstrates event sourcing and CQRS patterns for order processing, proving auditability and throughput capabilities
+  narrative_fit: Persistent order history connects payments, sagas, caching, and outbox delivery without sharing databases.
   shared_assets:
-    - gradle/libs.versions.toml
-    - Dockerfile multi-stage pattern
-    - benchmark JSON schema
+    - contracts/commerce-event-v1.schema.json
+    - .portfolio/contracts/benchmark-result-v2.schema.json
+    - Docker and Compose harness
 status: benchmarked
-claim: event sourcing e CQRS
+claim: PostgreSQL append-only event sourcing with optimistic concurrency and durable CQRS rebuild
 stack:
   - java21
-  - spring-boot
-  - postgresql
-  - redpanda
-  - docker
+  - spring-boot-3.4
+  - spring-jdbc
+  - postgresql-16.4
+  - flyway-10.20
+  - gradle-8.12
+  - docker-compose
 language_profile:
-  primary: spring-kotlin-backend
-  secondary: []
-  reason: Spring Boot with Java 21, using sealed interfaces and records for domain modeling
+  primary: java
+  secondary:
+    - spring-kotlin-interoperability
+  reason: Java 21 sealed interfaces and records demonstrate JVM interoperability with the Kotlin payments service.
 decision_brain:
   agentic_spec:
     source: .portfolio/decision-brain/agentic-spec-governance.yaml
@@ -34,91 +38,100 @@ decision_brain:
     mode: principal-agent-executed
     source: .portfolio/decision-brain/agent-graph.yaml
     handoff: sdd/agent-handoff.md
-    local_first_runtime: docker
+    local_first_runtime: docker-compose
   reuse_improvement_loop:
     source: .portfolio/decision-brain/reuse-improvement-loop.yaml
     review_path: sdd/reuse-improvement-review.md
-    current_status: pending
+    current_status: complete
   principles:
-    coupling_rule: domain/use cases do not depend on framework, database, broker, cloud SDK, transport, or UI
+    coupling_rule: Domain and use cases do not depend on Spring, JDBC, Flyway, PostgreSQL, HTTP, broker, or cloud SDK.
     solid: [srp, ocp, lsp, isp, dip]
-    simplicity_rule: in-memory event store avoids external DB dependency; benchmark runs standalone
-    testability_rule: domain tests run without Spring context; use cases testable via plain OrderService + EventStore
+    simplicity_rule: PostgreSQL is the only stateful runtime because durability is part of the claim.
+    testability_rule: Domain tests are plain Java; real persistence tests run against an isolated Compose PostgreSQL service.
     rejected_overengineering:
-      - persistence/ database not required for demo; event store in memory suffices
-      - redpanda/kafka not needed for single-JVM benchmark
-  stack_profile: spring-kotlin-backend
+      - Kafka and Redpanda are excluded because replay reads the event store and no publication claim is made.
+      - An ORM is excluded so append concurrency and projection replacement remain explicit SQL.
+      - A shared payments database is forbidden; integration uses the PaymentAuthorizer port.
+  stack_profile: java
   api_style: rest-http
   messaging: none
+  messaging_reason: Replay is an event-store concern; asynchronous delivery is owned by project 20.
   cloud:
     mode: none
-    local_provider: docker
-    real_provider_target: none
+    local_provider: docker-compose
+    real_provider_target: managed-postgresql
     emulated_services: []
-    adapter_rule: ports/adapters keep cloud SDK outside domain/use cases
-    config_switch: CLOUD_PROVIDER=docker
-    unsupported_behaviors: []
-  database: none
-  runtime: docker
-  library_policy: Spring Boot 3.4 provides DI and REST; Jackson handles JSON without extra framework
+    adapter_rule: Database and HTTP configuration change at adapters, never in domain code.
+    config_switch: DATABASE_URL and PAYMENTS_ADAPTER
+    unsupported_behaviors:
+      - multi-region replication
+  database:
+    engine: postgresql
+    version: "16.4"
+    purpose: append-only event history plus derived read model
+  runtime: docker-compose
+  library_policy: Spring JDBC exposes SQL invariants, Flyway owns schema history, and Jackson serializes sealed event payloads.
   record_path: sdd/technical-decision.md
   rejected_options:
-    - option: PostgreSQL + Redpanda
-      reason: Adds infrastructure complexity without improving benchmark claim; in-memory store keeps demo self-contained
+    - option: in-memory store
+      reason: Cannot prove restart durability or persistent replay.
+    - option: Redpanda or Kafka
+      reason: Does not strengthen the event-store replay claim.
 architecture:
-  style: cqrs-event-sourcing
-  reason: Event sourcing captures every state change as an immutable event; CQRS separates write (commands) from read (projection)
+  style: hexagonal-cqrs-event-sourcing
+  reason: Event sourcing is the write model, CQRS is the derived read model, and hexagonal ports isolate persistence and payments.
   problem_forces:
-    domain_complexity: low
-    integration_pressure: low
+    domain_complexity: medium
+    integration_pressure: medium
     ui_state_complexity: none
     data_or_ml_reproducibility: low
     auditability: high
-    throughput_or_async: low
-    independent_deployability: low
-  dependency_rule: domain -> application <- infrastructure (ports in domain, adapters in application)
+    throughput_or_async: medium
+    independent_deployability: medium
+  dependency_rule: infrastructure and input adapters depend inward on application/domain ports
   boundaries:
-    - domain/ -- events, commands, aggregate, service (zero framework imports)
-    - application/ -- event store, projection, controller (Spring-managed)
-  rejected_alternatives:
-    - style: layered
-      reason: Event sourcing proof demands clear command/query separation; CQRS makes the claim directly visible
+    - domain/ contains commands, sealed events, aggregate, service, and event-store port
+    - application/ contains CQRS use case, read model, controller, and output ports
+    - infrastructure/persistence contains JDBC adapters only
+    - infrastructure/payment contains local and HTTP payment adapters
+  integration_edges:
+    - target: spring-hexagonal-payments
+      protocol: HTTP POST /v1/payments
+      idempotency_key: order:{orderId}:authorize:v1
+      database_shared: false
+    - target: outbox-pattern
+      protocol: contracts/commerce-event-v1.schema.json
+      status: contract-only until project 20 closes
 design_system:
-  tokens: design-system/tokens.yaml
-  readme_components:
-    - readme_header
-    - benchmark_card
-    - architecture_card
-    - references_table
-  diagram_required: false
+  tokens: .portfolio/design-system/tokens.yaml
+  readme_components: [readme_header, benchmark_card, architecture_card, references_table]
+  diagram_required: true
 reuse:
   kit_version: local
-  uses:
-    - catalog
-    - programs
-    - proficiency-map
-    - component-packs
-    - openspec-schema
-    - decision-brain
-    - agent-graph
-    - reuse-improvement-loop
-    - architecture
-    - language-profiles
-    - design-system
-    - sdd
-    - harness
-    - templates
-    - skills
+  uses: [catalog, programs, component-packs, openspec-schema, decision-brain, agent-graph, reuse-improvement-loop, architecture, language-profiles, design-system, sdd, harness, templates, skills]
 benchmark:
-  primary_metric: events_per_second
-  unit: unit
-  command: docker run --rm event-sourcing-orders
-  result_path: benchmarks/results/benchmark-20260720.json
+  schema_version: 2
+  benchmark_id: postgres-append-rebuild
+  primary_metric: append_throughput
+  secondary_metric: projection_rebuild_latency
+  command: powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1
+  result_path: benchmarks/results/event-sourcing-orders-v2.json
+  workload:
+    warmup_orders: 25
+    measured_orders: 250
+    events_per_order: 4
+    repetitions: 3
+    concurrency: 1
   result:
-    value: 776
-    timestamp: "2026-07-20T21:01:32Z"
+    append_throughput_median: 205.34
+    append_throughput_unit: events/s
+    projection_rebuild_median: 66.97
+    projection_rebuild_unit: ms
+    replayed_events_per_run: 1000
+    failures: 0
 release:
-  docker: built
+  docker: compose-verified
   no_secret_default_path: true
   readme_has_number: true
   references_documented: true
+  push_requested: false

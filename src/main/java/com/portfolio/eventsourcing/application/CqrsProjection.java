@@ -1,45 +1,52 @@
 package com.portfolio.eventsourcing.application;
 
+import com.portfolio.eventsourcing.application.port.out.OrderProjectionStore;
 import com.portfolio.eventsourcing.domain.Order;
-import com.portfolio.eventsourcing.domain.OrderEvent;
 import com.portfolio.eventsourcing.domain.OrderEventRepository;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CqrsProjection {
-    private final Map<UUID, Order> orders = new ConcurrentHashMap<>();
     private final OrderEventRepository repository;
+    private final OrderProjectionStore store;
 
-    public CqrsProjection(OrderEventRepository repository) {
+    public CqrsProjection(OrderEventRepository repository, OrderProjectionStore store) {
         this.repository = repository;
+        this.store = store;
     }
 
-    public void rebuild() {
-        orders.clear();
-        for (var event : repository.findAll()) {
-            orders.compute(event.orderId(), (id, order) -> {
-                if (order == null) order = new Order();
-                order.apply(event);
-                return order;
+    public long rebuild() {
+        var events = repository.findAll();
+        var orders = new LinkedHashMap<UUID, Order>();
+        for (var storedEvent : events) {
+            orders.compute(storedEvent.aggregateId(), (id, order) -> {
+                var current = order == null ? new Order() : order;
+                current.apply(storedEvent.payload());
+                return current;
             });
         }
+        var views = new LinkedHashMap<UUID, OrderView>();
+        orders.forEach((id, order) -> views.put(id, OrderView.from(order)));
+        store.replaceAll(views, events.size());
+        return events.size();
     }
 
-    public Order getOrder(UUID orderId) {
-        return orders.get(orderId);
+    public OrderView getOrder(UUID orderId) {
+        return store.findById(orderId).orElse(null);
     }
 
-    public List<Order> getAllOrders() {
-        return List.copyOf(orders.values());
+    public List<OrderView> getAllOrders() {
+        return store.findAll();
     }
 
-    public int countByStatus(String status) {
-        return (int) orders.values().stream()
-            .filter(o -> status.equals(o.getStatus()))
-            .count();
+    public long countByStatus(String status) {
+        return store.countByStatus(status);
+    }
+
+    public long checkpoint() {
+        return store.checkpoint();
     }
 }

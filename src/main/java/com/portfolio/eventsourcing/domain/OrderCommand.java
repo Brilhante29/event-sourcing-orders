@@ -7,8 +7,12 @@ public sealed interface OrderCommand {
         UUID orderId,
         String customerName,
         String product,
-        int quantity
+        int quantity,
+        long amountMinor,
+        String currency
     ) implements OrderCommand {}
+
+    record AuthorizePayment(UUID orderId) implements OrderCommand {}
 
     record ShipOrder(
         UUID orderId,

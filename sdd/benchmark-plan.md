@@ -1,41 +1,45 @@
-# Benchmark Plan: event-sourcing-orders
+# Benchmark Plan: PostgreSQL Append And CQRS Rebuild
 
 ## Hypothesis
 
-event sourcing e CQRS, measured by events_per_second.
+The real PostgreSQL implementation can append versioned order events and rebuild
+the complete persistent read model with zero count/checkpoint divergence.
 
-## Command
+## Reproducible Command
 
-```bash
-docker run --rm event-sourcing-orders
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1
 ```
 
-## Environment
+The script refuses a dirty source tree, builds the image, captures its digest,
+starts PostgreSQL, executes the workload, writes V2 JSON, and removes containers
+and volumes.
 
-- OS: Linux (Docker container, eclipse-temurin:21-jdk)
-- CPU: host-dependent
-- RAM: host-dependent
-- Container runtime: Docker
-- Java: 21.0.11
-- Date: 2026-07-20
+## Workload
 
-## Inputs
-
-- fixture: synthetic — 10,000 orders
-- dataset size: 90,000 events (9 events per order)
-- repetitions: 1
-- warmup: none (first run includes JIT compilation)
+- Warm-up: 25 orders, excluded from measurements.
+- Measured: 250 orders per repetition.
+- Events per order: create, payment-authorized, shipped, delivered.
+- Repetitions: 3 isolated database resets.
+- Concurrency: 1; no parallel throughput claim.
+- Fixture: deterministic order UUIDs and product/customer values.
 
 ## Metrics
 
-| Metric | Unit | Source | Why it matters |
-|---|---|---|---:|
-| events_per_second | events/s | BenchmarkRunner | proves the repo claim |
+| Metric | Unit | Statistic | Invariant |
+|---|---|---|---|
+| `append_throughput` | events/s | median of 3 | higher is better |
+| `projection_rebuild_latency` | ms | median of 3 | lower is better |
+| `replayed_events` | events | each sample | exactly 1,000 |
 
-## Result schema
+Each repetition fails when event count, projection checkpoint, or order count
+diverges. The current preliminary baseline is `205.34 events/s` and `66.97 ms`.
 
-Output must be JSON and include project, metric, value, unit, timestamp, environment, and command.
+## Evidence
 
-## Post angle
+- Schema: `.portfolio/contracts/benchmark-result-v2.schema.json`
+- Result: `benchmarks/results/event-sourcing-orders-v2.json`
+- Comparability key: `event-sourcing-orders:postgres16:orders250:events4:repeat3`
+- Artifact digest: digest of the raw sample evidence, avoiding a self-referential file hash.
 
-#14 event-sourcing-orders: 776 events/s — event sourcing e CQRS with Java 21 sealed types and Spring Boot.
+The number is local Docker evidence, not a production capacity claim.

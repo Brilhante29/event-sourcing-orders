@@ -3,10 +3,15 @@ WORKDIR /app
 COPY gradle/ gradle/
 COPY build.gradle.kts settings.gradle.kts ./
 COPY src src/
-RUN gradle build --no-daemon -x test
+RUN gradle clean bootJar --no-daemon
+RUN mkdir /app/extracted && cd /app/extracted && jar xf /app/build/libs/event-sourcing-orders-1.0.0.jar
 
-FROM eclipse-temurin:21-jdk
+FROM build AS test
+RUN gradle testClasses --no-daemon
+
+FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/build/libs/event-sourcing-orders-1.0.0.jar app.jar
-RUN jar xf app.jar
-ENTRYPOINT ["java", "-cp", "BOOT-INF/classes:BOOT-INF/lib/*", "com.portfolio.eventsourcing.benchmark.BenchmarkRunner"]
+COPY --from=build /app/extracted/ ./
+COPY --from=build /app/gradle/libs.versions.toml gradle/libs.versions.toml
+ENV MAIN_CLASS=com.portfolio.eventsourcing.benchmark.BenchmarkRunner
+ENTRYPOINT ["sh", "-c", "exec java -cp 'BOOT-INF/classes:BOOT-INF/lib/*' \"$MAIN_CLASS\" \"$@\"", "--"]

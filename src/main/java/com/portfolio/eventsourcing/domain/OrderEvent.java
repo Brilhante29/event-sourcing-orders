@@ -8,6 +8,7 @@ import java.util.UUID;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = OrderEvent.OrderCreated.class, name = "OrderCreated"),
+    @JsonSubTypes.Type(value = OrderEvent.OrderPaymentAuthorized.class, name = "OrderPaymentAuthorized"),
     @JsonSubTypes.Type(value = OrderEvent.OrderShipped.class, name = "OrderShipped"),
     @JsonSubTypes.Type(value = OrderEvent.OrderCancelled.class, name = "OrderCancelled"),
     @JsonSubTypes.Type(value = OrderEvent.OrderDelivered.class, name = "OrderDelivered")
@@ -21,6 +22,16 @@ public sealed interface OrderEvent {
         String customerName,
         String product,
         int quantity,
+        long amountMinor,
+        String currency,
+        Instant timestamp
+    ) implements OrderEvent {}
+
+    record OrderPaymentAuthorized(
+        UUID orderId,
+        UUID paymentId,
+        long amountMinor,
+        String currency,
         Instant timestamp
     ) implements OrderEvent {}
 

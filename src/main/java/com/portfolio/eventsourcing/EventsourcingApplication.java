@@ -2,6 +2,7 @@ package com.portfolio.eventsourcing;
 
 import com.portfolio.eventsourcing.domain.OrderService;
 import com.portfolio.eventsourcing.domain.OrderEventRepository;
+import com.portfolio.eventsourcing.application.port.out.PaymentAuthorizer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +15,7 @@ public class EventsourcingApplication {
     }
 
     @Bean
-    public OrderService orderService(OrderEventRepository repository) {
-        return new OrderService(repository);
+    public OrderService orderService(OrderEventRepository repository, PaymentAuthorizer paymentAuthorizer) {
+        return new OrderService(repository, paymentAuthorizer);
     }
 }

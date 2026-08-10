@@ -3,32 +3,23 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-
 $root = Split-Path -Parent $PSScriptRoot
 $failures = New-Object System.Collections.Generic.List[string]
 
-function Add-Failure {
-  param([string]$Message)
+function Add-Failure([string]$Message) {
   $script:failures.Add($Message)
 }
 
-function Require-File {
-  param([string]$RelativePath)
-  $path = Join-Path $root $RelativePath
-  if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+function Require-File([string]$RelativePath) {
+  if (-not (Test-Path -LiteralPath (Join-Path $root $RelativePath) -PathType Leaf)) {
     Add-Failure "Missing file: $RelativePath"
   }
 }
 
-function Invoke-Checked {
-  param(
-    [string]$Label,
-    [scriptblock]$Command
-  )
+function Invoke-Checked([string]$Label, [scriptblock]$Command) {
   & $Command
-  $exitCode = $LASTEXITCODE
-  if ($exitCode -ne 0) {
-    Add-Failure "$Label failed with exit code $exitCode"
+  if ($LASTEXITCODE -ne 0) {
+    Add-Failure "$Label failed with exit code $LASTEXITCODE"
   }
   $global:LASTEXITCODE = 0
 }
@@ -38,6 +29,10 @@ $requiredFiles = @(
   "project.yaml",
   "REFERENCES.md",
   "AGENTS.md",
+  "compose.yaml",
+  "contracts/commerce-event-v1.schema.json",
+  ".portfolio/contracts/benchmark-result-v2.schema.json",
+  "benchmarks/results/event-sourcing-orders-v2.json",
   "sdd/spec.md",
   "sdd/benchmark-plan.md",
   "sdd/architecture-decision.md",
@@ -47,89 +42,108 @@ $requiredFiles = @(
 )
 foreach ($file in $requiredFiles) { Require-File $file }
 
+$readmePath = Join-Path $root "README.md"
+if (Test-Path $readmePath) {
+  $readme = Get-Content -Raw $readmePath
+  if ($readme -notmatch "(?m)^# #14 event-sourcing-orders: [0-9.]+ events/s and [0-9.]+ ms rebuild$") {
+    Add-Failure "README must open with project number and both benchmark numbers"
+  }
+}
+
+$projectPath = Join-Path $root "project.yaml"
+if (Test-Path $projectPath) {
+  $project = Get-Content -Raw $projectPath
+  foreach ($pattern in @(
+    "(?m)^  messaging: none$",
+    "(?m)^    engine: postgresql$",
+    "(?m)^  primary: java$",
+    "(?m)^  result_path: benchmarks/results/event-sourcing-orders-v2.json$"
+  )) {
+    if ($project -notmatch $pattern) {
+      Add-Failure "project.yaml is missing required decision: $pattern"
+    }
+  }
+}
+
 $reuseReviewPath = Join-Path $root "sdd/reuse-improvement-review.md"
-if (Test-Path -LiteralPath $reuseReviewPath -PathType Leaf) {
-  $reuseReview = Get-Content -Raw -LiteralPath $reuseReviewPath
-  if ($reuseReview -match "<id>|<project-name>") {
-    Add-Failure "Reuse improvement review still contains template placeholders"
-  }
-  if ($reuseReview.Contains('|  | `patch_now|backlog|reject` |')) {
-    Add-Failure "Reuse improvement review still contains the blank template finding row"
-  }
-  $requiredFinalGatePatterns = @(
-    "(?m)^- \[x\] Reusable improvements were patched or recorded\.\r?$",
-    "(?m)^- \[x\] Project-specific implementation was not moved into the kit\.\r?$",
-    "(?m)^- \[x\] Validation reflects .+\.\r?$"
-  )
-  foreach ($pattern in $requiredFinalGatePatterns) {
-    if ($reuseReview -notmatch $pattern) {
-      Add-Failure "Reuse improvement review final gate is incomplete: $pattern"
+if (Test-Path $reuseReviewPath) {
+  $reuseReview = Get-Content -Raw $reuseReviewPath
+  foreach ($line in @(
+    "- [x] Reusable improvements were patched or recorded.",
+    "- [x] Project-specific implementation was not moved into the kit.",
+    "- [x] Validation reflects the repeated V2 producer and artifact-mount mistakes."
+  )) {
+    if (-not $reuseReview.Contains($line)) {
+      Add-Failure "Reuse review final gate is incomplete: $line"
     }
   }
 }
 
-$benchmarkFiles = @()
-$benchmarkDir = Join-Path $root "benchmarks/results"
-if (Test-Path -LiteralPath $benchmarkDir -PathType Container) {
-  $benchmarkFiles = @(Get-ChildItem -LiteralPath $benchmarkDir -Filter *.json -File)
-}
-if ($benchmarkFiles.Count -eq 0) {
-  Add-Failure "Missing benchmark JSON under benchmarks/results"
-}
-
-Push-Location -LiteralPath $root
+Push-Location $root
 try {
-  foreach ($file in $benchmarkFiles) {
-    Invoke-Checked "benchmark JSON validation: $($file.Name)" { python -m json.tool $file.FullName | Out-Null }
+  foreach ($schema in @(
+    "contracts/commerce-event-v1.schema.json",
+    ".portfolio/contracts/benchmark-result-v2.schema.json"
+  )) {
+    if (Test-Path $schema) {
+      Invoke-Checked "JSON syntax: $schema" { python -m json.tool $schema | Out-Null }
+    }
   }
 
-  if (Test-Path -LiteralPath (Join-Path $root "src") -PathType Container) {
-    $previousPythonPath = $env:PYTHONPATH
-    $srcPath = Join-Path $root "src"
-    if ($previousPythonPath) {
-      $env:PYTHONPATH = $srcPath + [System.IO.Path]::PathSeparator + $previousPythonPath
-    } else {
-      $env:PYTHONPATH = $srcPath
+  $resultPath = "benchmarks/results/event-sourcing-orders-v2.json"
+  if (Test-Path $resultPath) {
+    Invoke-Checked "benchmark V2 schema" {
+      python -m jsonschema -i $resultPath ".portfolio/contracts/benchmark-result-v2.schema.json"
     }
-    Invoke-Checked "python compile src" { python -m compileall -q (Join-Path $root "src") }
-    if (Test-Path -LiteralPath (Join-Path $root "tests") -PathType Container) {
-      Invoke-Checked "python compile tests" { python -m compileall -q (Join-Path $root "tests") }
-      Invoke-Checked "python unittest" { python -m unittest discover -s (Join-Path $root "tests") -v }
+    try {
+      $result = Get-Content -Raw $resultPath | ConvertFrom-Json
+      if ($result.schema_version -ne 2) { Add-Failure "Benchmark schema_version must be 2" }
+      if ($result.execution.repeat -lt 3) { Add-Failure "Benchmark requires at least 3 repetitions" }
+      foreach ($metric in $result.metrics) {
+        if (@($metric.samples).Count -lt 3) {
+          Add-Failure "Metric $($metric.name) requires at least 3 samples"
+        }
+        if ($metric.failures -ne 0) { Add-Failure "Metric $($metric.name) reports failures" }
+      }
+      if ($result.provenance.source_commit -eq ("0" * 40)) {
+        Add-Failure "Benchmark source_commit is a placeholder"
+      }
+      if ($result.provenance.image_digest -eq ("sha256:" + ("0" * 64))) {
+        Add-Failure "Benchmark image_digest is a placeholder"
+      }
+      if ($result.provenance.clean_tree -ne $true) {
+        Add-Failure "Benchmark must come from a clean tree"
+      }
+    } catch {
+      Add-Failure "Benchmark V2 could not be inspected: $($_.Exception.Message)"
     }
-    $env:PYTHONPATH = $previousPythonPath
+  }
+
+  $legacy = ("ro" + "che" + "do")
+  $searchFiles = Get-ChildItem -Path $root -Recurse -File | Where-Object {
+    $normalized = $_.FullName -replace "\\", "/"
+    $normalized -notmatch "/.git/" -and
+    $normalized -notmatch "/.gradle/" -and
+    $_.Extension -in @(".md", ".yaml", ".yml", ".json", ".ps1", ".sh", ".java", ".kt")
+  }
+  $forbidden = Select-String -Path $searchFiles.FullName -Pattern @(
+    $legacy,
+    ($legacy.Substring(0,1).ToUpper() + $legacy.Substring(1))
+  ) -SimpleMatch -ErrorAction SilentlyContinue
+  if ($forbidden) { Add-Failure "Forbidden legacy project nickname found" }
+
+  if (-not $SkipDocker) {
+    Invoke-Checked "docker build" { docker compose build benchmark | Out-Null }
   }
 } finally {
   Pop-Location
 }
 
-$legacy = ("ro" + "che" + "do")
-$patterns = @($legacy, ($legacy.Substring(0,1).ToUpper() + $legacy.Substring(1)))
-$searchFiles = Get-ChildItem -Path $root -Recurse -File | Where-Object {
-  $normalized = $_.FullName -replace "\\", "/"
-  $normalized -notmatch "/.git/" -and
-  $normalized -notmatch "/data/runtime/" -and
-  $_.Extension -in @(".md", ".yaml", ".yml", ".json", ".ps1", ".py", ".js", ".ts", ".tsx", ".go", ".kt", ".java")
-}
-$forbidden = Select-String -Path $searchFiles.FullName -Pattern $patterns -SimpleMatch -ErrorAction SilentlyContinue
-if ($forbidden) {
-  Add-Failure "Forbidden legacy project nickname found"
-}
-
-if (-not $SkipDocker -and (Test-Path -LiteralPath (Join-Path $root "Dockerfile") -PathType Leaf)) {
-  $imageName = (Split-Path -Leaf $root).ToLowerInvariant()
-  Invoke-Checked "docker build" { docker build -t $imageName $root | Out-Null }
-}
-
 if ($failures.Count -gt 0) {
-  # Write-Error is a terminating error while $ErrorActionPreference is "Stop",
-  # so emitting the list through it aborts on the first entry and hides every
-  # remaining failure. Report the complete list on the success stream instead.
   Write-Host "portfolio project validation failed with $($failures.Count) issue(s):"
   foreach ($failure in $failures) {
     Write-Host "  - $failure"
-    if ($env:GITHUB_ACTIONS -eq "true") {
-      Write-Host "::error::$failure"
-    }
+    if ($env:GITHUB_ACTIONS -eq "true") { Write-Host "::error::$failure" }
   }
   exit 1
 }

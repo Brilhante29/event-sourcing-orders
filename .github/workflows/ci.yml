@@ -1,21 +1,52 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4.7.1
         with:
           java-version: "21"
-          distribution: "temurin"
+          distribution: temurin
+          cache: gradle
       - uses: gradle/actions/setup-gradle@d9c87d481d55275bb5441eef3fe0e46805f9ef70 # v3.5.0
-      - run: ./gradlew test
-      - run: ./gradlew build -x test
-      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.13.0
-      - name: Build Docker image
-        run: docker build -t event-sourcing-orders .
-      - name: Run benchmark
-        run: docker run --rm event-sourcing-orders
+      - uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.12"
+
+      - name: Unit tests
+        run: ./gradlew test --no-daemon
+
+      - name: PostgreSQL integration tests
+        run: docker compose up --build --abort-on-container-exit --exit-code-from integration-test integration-test
+
+      - name: Clean integration topology
+        if: always()
+        run: docker compose down --volumes --remove-orphans
+
+      - name: Install JSON Schema validator
+        run: python -m pip install --disable-pip-version-check jsonschema==4.25.1
+
+      - name: Reproduce benchmark V2
+        env:
+          BENCHMARK_PRODUCER: github-actions
+          HARDWARE_CLASS: github-actions-ubuntu-latest
+        run: bash tools/benchmark.sh
+
+      - name: Validate repository and evidence
+        shell: pwsh
+        run: ./tools/validate-project.ps1 -SkipDocker
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: event-sourcing-orders-v2
+          path: benchmarks/results/event-sourcing-orders-v2.json
+          if-no-files-found: error

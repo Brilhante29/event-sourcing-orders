@@ -11,12 +11,14 @@ class OrderTest {
     @Test
     void shouldRebuildFromSingleEvent() {
         var orderId = UUID.randomUUID();
-        var event = new OrderEvent.OrderCreated(orderId, "Alice", "Widget", 3, Instant.now());
+        var event = new OrderEvent.OrderCreated(orderId, "Alice", "Widget", 3, 2590, "BRL", Instant.now());
         var order = new Order(List.of(event));
         assertThat(order.getId()).isEqualTo(orderId);
         assertThat(order.getCustomerName()).isEqualTo("Alice");
         assertThat(order.getProduct()).isEqualTo("Widget");
         assertThat(order.getQuantity()).isEqualTo(3);
+        assertThat(order.getAmountMinor()).isEqualTo(2590);
+        assertThat(order.getCurrency()).isEqualTo("BRL");
         assertThat(order.getStatus()).isEqualTo("CREATED");
     }
 
@@ -24,7 +26,8 @@ class OrderTest {
     void shouldRebuildFromMultipleEvents() {
         var orderId = UUID.randomUUID();
         List<OrderEvent> events = List.of(
-            new OrderEvent.OrderCreated(orderId, "Bob", "Gadget", 1, Instant.now()),
+            new OrderEvent.OrderCreated(orderId, "Bob", "Gadget", 1, 1990, "BRL", Instant.now()),
+            new OrderEvent.OrderPaymentAuthorized(orderId, UUID.randomUUID(), 1990, "BRL", Instant.now()),
             new OrderEvent.OrderShipped(orderId, "TRACK-123", Instant.now()),
             new OrderEvent.OrderDelivered(orderId, Instant.now()));
         var order = new Order(events);
@@ -37,7 +40,7 @@ class OrderTest {
     void shouldRebuildWithCancellation() {
         var orderId = UUID.randomUUID();
         List<OrderEvent> events = List.of(
-            new OrderEvent.OrderCreated(orderId, "Carol", "Service", 2, Instant.now()),
+            new OrderEvent.OrderCreated(orderId, "Carol", "Service", 2, 4500, "BRL", Instant.now()),
             new OrderEvent.OrderCancelled(orderId, "out of stock", Instant.now()));
         var order = new Order(events);
         assertThat(order.getStatus()).isEqualTo("CANCELLED");
@@ -55,10 +58,21 @@ class OrderTest {
     void shouldApplyEventAfterConstruction() {
         var orderId = UUID.randomUUID();
         List<OrderEvent> events = List.of(
-            new OrderEvent.OrderCreated(orderId, "Dave", "Tool", 5, Instant.now()));
+            new OrderEvent.OrderCreated(orderId, "Dave", "Tool", 5, 8700, "BRL", Instant.now()));
         var order = new Order(events);
         order.apply(new OrderEvent.OrderShipped(orderId, "TRACK-456", Instant.now()));
         assertThat(order.getStatus()).isEqualTo("SHIPPED");
         assertThat(order.getTrackingNumber()).isEqualTo("TRACK-456");
+    }
+
+    @Test
+    void shouldRestorePaymentAuthorizationFromEventHistory() {
+        var orderId = UUID.randomUUID();
+        var paymentId = UUID.randomUUID();
+        var order = new Order(List.of(
+            new OrderEvent.OrderCreated(orderId, "Eva", "Plan", 1, 1200, "BRL", Instant.now()),
+            new OrderEvent.OrderPaymentAuthorized(orderId, paymentId, 1200, "BRL", Instant.now())));
+
+        assertThat(order.getPaymentId()).isEqualTo(paymentId);
     }
 }

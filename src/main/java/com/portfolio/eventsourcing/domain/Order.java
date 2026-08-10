@@ -8,6 +8,9 @@ public class Order {
     private String customerName;
     private String product;
     private int quantity;
+    private long amountMinor;
+    private String currency;
+    private UUID paymentId;
     private String status;
     private String trackingNumber;
     private String cancellationReason;
@@ -27,8 +30,11 @@ public class Order {
                 this.customerName = e.customerName();
                 this.product = e.product();
                 this.quantity = e.quantity();
+                this.amountMinor = e.amountMinor();
+                this.currency = e.currency();
                 this.status = "CREATED";
             }
+            case OrderEvent.OrderPaymentAuthorized e -> this.paymentId = e.paymentId();
             case OrderEvent.OrderShipped e -> {
                 this.trackingNumber = e.trackingNumber();
                 this.status = "SHIPPED";
@@ -47,6 +53,9 @@ public class Order {
     public String getCustomerName() { return customerName; }
     public String getProduct() { return product; }
     public int getQuantity() { return quantity; }
+    public long getAmountMinor() { return amountMinor; }
+    public String getCurrency() { return currency; }
+    public UUID getPaymentId() { return paymentId; }
     public String getStatus() { return status; }
     public String getTrackingNumber() { return trackingNumber; }
     public String getCancellationReason() { return cancellationReason; }

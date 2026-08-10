@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:16.4-alpine
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: orders
+      POSTGRES_PASSWORD: orders
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orders -d orders"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - orders-data:/var/lib/postgresql/data
+
+  api:
+    image: event-sourcing-orders:benchmark
+    build: .
+    environment:
+      MAIN_CLASS: com.portfolio.eventsourcing.EventsourcingApplication
+      DATABASE_URL: jdbc:postgresql://postgres:5432/orders
+      DATABASE_USER: orders
+      DATABASE_PASSWORD: orders
+      PAYMENTS_ADAPTER: ${PAYMENTS_ADAPTER:-local}
+      PAYMENTS_BASE_URL: ${PAYMENTS_BASE_URL:-http://host.docker.internal:8081}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  benchmark:
+    image: event-sourcing-orders:benchmark
+    build: .
+    environment:
+      MAIN_CLASS: com.portfolio.eventsourcing.benchmark.BenchmarkRunner
+      DATABASE_URL: jdbc:postgresql://postgres:5432/orders
+      DATABASE_USER: orders
+      DATABASE_PASSWORD: orders
+      PAYMENTS_ADAPTER: local
+      BENCHMARK_ORDERS: ${BENCHMARK_ORDERS:-250}
+      BENCHMARK_WARMUP_ORDERS: ${BENCHMARK_WARMUP_ORDERS:-25}
+      BENCHMARK_REPETITIONS: ${BENCHMARK_REPETITIONS:-3}
+      BENCHMARK_OUTPUT: /app/benchmarks/results/event-sourcing-orders-v2.json
+      SOURCE_COMMIT: ${SOURCE_COMMIT:-0000000000000000000000000000000000000000}
+      CLEAN_TREE: ${CLEAN_TREE:-true}
+      IMAGE_DIGEST: ${IMAGE_DIGEST:-sha256:0000000000000000000000000000000000000000000000000000000000000000}
+      BENCHMARK_PRODUCER: ${BENCHMARK_PRODUCER:-local}
+      HARDWARE_CLASS: ${HARDWARE_CLASS:-local-docker}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./benchmarks/results:/app/benchmarks/results
+
+  integration-test:
+    image: event-sourcing-orders:test
+    build:
+      context: .
+      target: test
+    environment:
+      TEST_DATABASE_URL: jdbc:postgresql://postgres:5432/orders
+      TEST_DATABASE_USER: orders
+      TEST_DATABASE_PASSWORD: orders
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ["gradle"]
+    command: ["test", "--rerun-tasks", "--no-daemon"]
+
+volumes:
+  orders-data:

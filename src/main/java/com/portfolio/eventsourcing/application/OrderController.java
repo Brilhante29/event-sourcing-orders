@@ -1,6 +1,5 @@
 package com.portfolio.eventsourcing.application;
 
-import com.portfolio.eventsourcing.domain.Order;
 import com.portfolio.eventsourcing.domain.OrderCommand;
 import com.portfolio.eventsourcing.domain.OrderService;
 import java.util.List;
@@ -25,16 +24,29 @@ public class OrderController {
     }
 
     @PostMapping
-    public Map<String, Object> createOrder(@RequestBody Map<String, String> body) {
+    public Map<String, Object> createOrder(@RequestBody CreateOrderRequest body) {
         var orderId = UUID.randomUUID();
         var command = new OrderCommand.CreateOrder(
             orderId,
-            body.get("customerName"),
-            body.get("product"),
-            Integer.parseInt(body.get("quantity")));
+            body.customerName(),
+            body.product(),
+            body.quantity(),
+            body.amountMinor(),
+            body.currency());
         var event = orderService.handle(command);
         projection.rebuild();
         return Map.of("orderId", orderId.toString(), "event", event.getClass().getSimpleName());
+    }
+
+    @PostMapping("/{id}/authorize-payment")
+    public Map<String, Object> authorizePayment(@PathVariable UUID id) {
+        var event = orderService.handle(new OrderCommand.AuthorizePayment(id));
+        projection.rebuild();
+        var authorized = (com.portfolio.eventsourcing.domain.OrderEvent.OrderPaymentAuthorized) event;
+        return Map.of(
+            "orderId", id.toString(),
+            "paymentId", authorized.paymentId().toString(),
+            "event", event.getClass().getSimpleName());
     }
 
     @PostMapping("/{id}/ship")
@@ -62,12 +74,20 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public Order getOrder(@PathVariable UUID id) {
+    public OrderView getOrder(@PathVariable UUID id) {
         return projection.getOrder(id);
     }
 
     @GetMapping
-    public List<Order> listOrders() {
+    public List<OrderView> listOrders() {
         return projection.getAllOrders();
     }
+
+    public record CreateOrderRequest(
+        String customerName,
+        String product,
+        int quantity,
+        long amountMinor,
+        String currency
+    ) {}
 }
