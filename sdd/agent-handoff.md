@@ -11,7 +11,7 @@ Push policy: do not push from this implementation task.
 - Persistent projection rebuild and checkpoint are implemented transactionally.
 - PaymentAuthorizer has local default and optional #11 HTTP adapters.
 - Compose integration tests pass against PostgreSQL 16.4.
-- V2 harness completed a preliminary 3-run workload.
+- V2 harness completed a clean-tree 3-run workload from source commit `ffc61b689791b0b54fa9ca4f6b201dea69370ef0`.
 
 ## Accepted Decisions
 
@@ -34,7 +34,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/validate-project.ps1 -
 
 ## Continuation Boundary
 
-Next agent should verify the generated V2 source/image digests, update README
-numbers only if the clean run differs, run validation, and commit the evidence.
-Do not add a broker or shared payments database. No internal reasoning is needed;
-the accepted decisions and evidence paths above are sufficient.
+The technical close is complete. A publishing agent may push the two local
+commits and verify exact-head CI. Do not add a broker or shared payments
+database. No internal reasoning is needed; the accepted decisions and evidence
+paths above are sufficient.

@@ -1,0 +1,67 @@
+{
+  "schema_version" : 2,
+  "run_id" : "e838160b-e54b-449b-be61-b36b6f9a7a06",
+  "project" : "event-sourcing-orders",
+  "benchmark_id" : "postgres-append-rebuild",
+  "workload" : {
+    "concurrency" : 1,
+    "config_digest" : "sha256:a90a04386002e87e6a5ed8ac69873043eb5f9f13269dbb3594a967c205246dbc",
+    "version" : "1.0.0",
+    "measured_iterations" : 250,
+    "warmup_iterations" : 25,
+    "fixture_digest" : "sha256:1172d1c9b839b30e0f4e773027be7414759bc16de8f271295e8f960fa9239a14"
+  },
+  "metrics" : [ {
+    "summary" : {
+      "statistic" : "median"
+    },
+    "failures" : 0,
+    "value" : 287.4718873551482,
+    "direction" : "higher_is_better",
+    "samples" : [ 222.65554712514364, 287.4718873551482, 296.7891781735845 ],
+    "name" : "append_throughput",
+    "unit" : "events/s"
+  }, {
+    "summary" : {
+      "statistic" : "median"
+    },
+    "failures" : 0,
+    "value" : 48.314226,
+    "direction" : "lower_is_better",
+    "samples" : [ 58.197648, 48.314226, 32.575665 ],
+    "name" : "projection_rebuild_latency",
+    "unit" : "ms"
+  }, {
+    "summary" : {
+      "expected_per_run" : 1000
+    },
+    "failures" : 0,
+    "value" : 1000.0,
+    "direction" : "target",
+    "samples" : [ 1000.0, 1000.0, 1000.0 ],
+    "name" : "replayed_events",
+    "unit" : "events"
+  } ],
+  "execution" : {
+    "duration_seconds" : 21.825700167,
+    "repeat" : 3,
+    "command" : "powershell -NoProfile -ExecutionPolicy Bypass -File tools/benchmark.ps1",
+    "exit_code" : 0,
+    "started_at" : "2026-08-10T05:25:18.139198510Z"
+  },
+  "environment" : {
+    "hardware_class" : "local-docker",
+    "runtime" : "Java 21.0.11 / PostgreSQL 16.4",
+    "architecture" : "amd64"
+  },
+  "provenance" : {
+    "source_commit" : "ffc61b689791b0b54fa9ca4f6b201dea69370ef0",
+    "producer" : "local",
+    "image_ref" : "event-sourcing-orders:benchmark",
+    "clean_tree" : true,
+    "dependency_lock_digest" : "sha256:b870035d50d3c28df18c6476eadd8708c34ad2bf8998f162f9a02c4c013d01ad",
+    "artifact_digest" : "sha256:66e6e186f26023004936529cb8fbab8253f510e973f1aa58d2681f8ca80fe48a",
+    "image_digest" : "sha256:6c55c304b41b60523e24e69c12a032f5764895dc4015cdb82a14e7608af22ce0"
+  },
+  "comparability_key" : "event-sourcing-orders:postgres16:orders250:events4:repeat3"
+}

@@ -123,9 +123,9 @@ benchmark:
     repetitions: 3
     concurrency: 1
   result:
-    append_throughput_median: 205.34
+    append_throughput_median: 287.47
     append_throughput_unit: events/s
-    projection_rebuild_median: 66.97
+    projection_rebuild_median: 48.31
     projection_rebuild_unit: ms
     replayed_events_per_run: 1000
     failures: 0

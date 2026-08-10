@@ -33,7 +33,7 @@ and volumes.
 | `replayed_events` | events | each sample | exactly 1,000 |
 
 Each repetition fails when event count, projection checkpoint, or order count
-diverges. The current preliminary baseline is `205.34 events/s` and `66.97 ms`.
+diverges.
 
 ## Evidence
 
@@ -42,4 +42,6 @@ diverges. The current preliminary baseline is `205.34 events/s` and `66.97 ms`.
 - Comparability key: `event-sourcing-orders:postgres16:orders250:events4:repeat3`
 - Artifact digest: digest of the raw sample evidence, avoiding a self-referential file hash.
 
-The number is local Docker evidence, not a production capacity claim.
+Final clean-tree baseline: `287.47 events/s` append throughput and `48.31 ms`
+projection rebuild. The number is local Docker evidence, not a production
+capacity claim.

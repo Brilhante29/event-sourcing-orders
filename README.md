@@ -1,8 +1,8 @@
-# #14 event-sourcing-orders: 205.34 events/s and 66.97 ms rebuild
+# #14 event-sourcing-orders: 287.47 events/s and 48.31 ms rebuild
 
 **Claim:** a PostgreSQL append-only event store preserves order history across restarts, rejects stale writes, and rebuilds a durable CQRS read model.
 
-**Benchmark:** median `205.34 events/s` append throughput and `66.97 ms` projection rebuild for `1,000` events, across three measured Docker runs after warm-up.
+**Benchmark:** median `287.47 events/s` append throughput and `48.31 ms` projection rebuild for `1,000` events, across three measured Docker runs after warm-up.
 
 [![CI](https://github.com/Brilhante29/event-sourcing-orders/actions/workflows/ci.yml/badge.svg)](https://github.com/Brilhante29/event-sourcing-orders/actions/workflows/ci.yml)
 
@@ -69,8 +69,8 @@ bash tools/benchmark.sh
 
 | Metric | Median | Samples | Direction |
 |---|---:|---|---|
-| Append throughput | 205.34 events/s | 193.82 / 213.84 / 205.34 | higher |
-| Projection rebuild | 66.97 ms | 88.77 / 66.97 / 37.60 | lower |
+| Append throughput | 287.47 events/s | 222.66 / 287.47 / 296.79 | higher |
+| Projection rebuild | 48.31 ms | 58.20 / 48.31 / 32.58 | lower |
 | Replayed events | 1,000 | 1,000 / 1,000 / 1,000 | exact |
 
 Workload: 25 warm-up orders, then three isolated repetitions of 250 orders and

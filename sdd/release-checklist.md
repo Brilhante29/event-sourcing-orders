@@ -9,4 +9,4 @@
 - [x] Benchmark has warm-up, three repetitions, and V2 output.
 - [x] README opens with project number, claim, and numeric result.
 - [x] Messaging is explicitly `none`; no Kafka/Redpanda claim remains.
-- [ ] Clean-tree benchmark provenance and final validation recorded.
+- [x] Clean-tree benchmark provenance and final validation recorded.
