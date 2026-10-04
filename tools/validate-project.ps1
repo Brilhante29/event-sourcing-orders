@@ -44,9 +44,13 @@ foreach ($file in $requiredFiles) { Require-File $file }
 
 $readmePath = Join-Path $root "README.md"
 if (Test-Path $readmePath) {
-  $readme = Get-Content -Raw $readmePath
-  if ($readme -notmatch "(?m)^# #14 event-sourcing-orders: [0-9.]+ events/s and [0-9.]+ ms rebuild$") {
-    Add-Failure "README must open with project number and both benchmark numbers"
+  $readmeLines = @(Get-Content $readmePath -TotalCount 8)
+  if ($readmeLines[0] -notmatch "^# Event-Sourced Orders: \S") {
+    Add-Failure "README must open with the descriptive project title"
+  }
+  $readmeOpening = $readmeLines -join "`n"
+  if ($readmeOpening -notmatch '[0-9.]+ events/s' -or $readmeOpening -notmatch '[0-9.]+ ms[`*]* projection rebuild') {
+    Add-Failure "README opening must state both benchmark numbers"
   }
 }
 
